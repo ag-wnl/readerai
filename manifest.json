@@ -1,0 +1,24 @@
+{
+    "name" : "Readerai",
+    "version" : "0.0.1",
+    "description" : "Adding some smartness to the text you're reading.",
+    "manifest_version": 3,
+    "background" : {    
+        "service_worker" : "background.js",
+        "type": "module"
+    },
+    "permissions" : ["storage","activeTab","tabs","scripting","webRequest","declarativeNetRequestWithHostAccess", "background"],
+    "action" : {
+        "default_popup": "popup.html"
+    },
+    "icons" : {
+        "128" : "logo.png"
+        
+    },
+    "content_scripts": [
+        {
+            "matches" : ["<all_urls>"],
+            "js" : ["./scripts/text_selection.js", "./scripts/un_highlight.js", "./scripts/darkmode.js", "./scripts/text_assist.js" ,"scripts/content.js"]
+        }
+    ]
+}

@@ -1,4 +1,3 @@
-
 // the button to enable text-assist feature od readerAI
 
 let textBox_open = false; //toggle flag
@@ -12,6 +11,7 @@ function removeTextPrompt() {
     if(text_prompt) {
         text_prompt.remove();
     }
+    textBox_open = !textBox_open;
 }
 
 function promptGen(box_text, audio_play) {
@@ -32,7 +32,6 @@ function promptGen(box_text, audio_play) {
     boxx.style.right = "70%";
     boxx.style.boxShadow = "0 2px 4px darkslategray";
 
-
     boxx.textContent = box_text;
     const close_button = document.createElement("button");
     
@@ -43,7 +42,6 @@ function promptGen(box_text, audio_play) {
     close_button.style.margin = "5px";
     close_button.style.cursor = "pointer";
     close_button.style.boxShadow = "rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset";
-
 
     const audio_btn = document.createElement("button");
     audio_btn.id = "readerai_audio";
@@ -71,17 +69,13 @@ function promptGen(box_text, audio_play) {
 
 
     audio_btn.addEventListener("click", function() {
-
         audioPlayer.play();
       });
-
-
 
     console.log("added text assist box!");
 
     close_button.addEventListener('click', function() {
         removeTextPrompt();
-        textBox_open = !textBox_open;
     });
 }
 
@@ -113,10 +107,10 @@ async function getDictionary(search_text) {
     }
 }
 
-
 function doButton(){
     const body_content = document.querySelector("body");
     const btn = document.createElement("button");
+    btn.id = "readerai_text_assist_button";
 
     //css button styling
     btn.textContent = "\u2714";
@@ -124,13 +118,11 @@ function doButton(){
     btn.style.color = "white";
     btn.style.border = "none";
     btn.style.borderRadius = "50%"
-    btn.style.position = "fixed";
+    btn.style.position = "absolute";
     btn.style.borderWidth = "0";
     btn.style.fontFamily = "JetBrains Mono";
     btn.style.fontWeight = "medium";
-    btn.style.bottom = "4%";
     btn.style.textDecoration = "none";
-    btn.style.right = "2%";
     btn.style.boxShadow = "0 2px 4px darkslategray";
     btn.style.cursor = "pointer";
     btn.style.transition = "box-shadow .15s,transform .15s";
@@ -154,16 +146,34 @@ function doButton(){
         this.style.transform = '';
     });
 
-    document.body.appendChild(btn);
-
     //to get selected highlighted text by user.
+    document.body.appendChild(btn);
+    
     document.addEventListener('mouseup', function() {
+        
+        btn.style.visibility = "visible";   
+        const selection_txt = window.getSelection();
         const selected_text = window.getSelection().toString();
+        console.log(selected_text);
         prompt_text = selected_text;
+   
+        if(selected_text.length > 0) {
+           
+            const range = selection_txt.getRangeAt(0);  
+            const rect = range.getBoundingClientRect();
+            const topOffset = rect.top + window.pageYOffset - btn.offsetHeight - 5;  
+            const leftOffset = rect.left + window.pageXOffset + rect.width + 5; 
 
+            btn.style.top = topOffset + "px";
+            btn.style.left = leftOffset + "px";
+            
+        } else if(selected_text.length === 0) {
+            
+            prompt_text = "";
+            removeTextPrompt();
+            btn.style.visibility = "hidden";          
+        }
     });
-
-    console.log("text assist button added to page!")
 
     btn.addEventListener('click', function() {
         if(prompt_text === ""){
@@ -176,6 +186,8 @@ function doButton(){
             removeTextPrompt();
         }
     });
+
+    console.log("text assist button added to page!")
 }
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {

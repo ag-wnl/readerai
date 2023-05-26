@@ -245,24 +245,60 @@ function doButton(){
         }
     });
 
-    console.log("text assist button added to page!")
+    console.log("text assist button added to page.")
 }
 
+doButton();
 
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    console.log("starting text assist")
-    if (message.message === "Assist_button_set_ON") {
-        doButton();
-    }
-});
 
-chrome.storage.sync.get(["settingHighlight", "setting_textAssist", "settingAssistButton"], function(data) {
-    if(data.settingAssistButton){
-        doButton();
-    }else{
-        return;
-    }
-});
+// chrome.storage.sync.get(["settingHighlight", "setting_textAssist", "settingAssistButton"], function(data) {
+//     if(data.settingAssistButton){
+//         doButton();
+//     }else{
+//         console.log("Text assist button hidden.");
+//         const the_button = document.getElementById("readerai_text_assist_button");
+//         if(the_button){
+//             the_button.remove();
+//         }
+//     }
+// });
+
+
+// chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+//     console.log("starting text assist")
+//     if (message.message === "Assist_button_set_ON") {
+//         doButton();
+//     }
+// });
+
+// document.getElementById("assist_btn_popup").addEventListener("click", function() {
+        
+//     chrome.storage.sync.get(["settingHighlight", "setting_textAssist", "settingAssistButton"], function(data) {
+//         if(data.settingAssistButton){
+
+//             const settings = {
+//                 settingAssistButton: false,
+//             };
+//             chrome.storage.sync.set(settings, function () {
+//                 console.log("State saved:", settings);
+//             });
+
+//         }else{
+//             chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+//                 chrome.tabs.sendMessage(tabs[0].id, { message: "Assist_button_set_ON" });
+//             });
+
+//             const settings = {
+//                 settingAssistButton: true,
+//             };
+//             chrome.storage.sync.set(settings, function () {
+//                 console.log("State saved:", settings);
+//             });
+//         }
+//     });
+// })
+
+
 
 
 

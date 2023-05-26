@@ -80,10 +80,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log("State saved:", settings);
                 });
 
+                // chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+                //     chrome.tabs.sendMessage(tabs[0].id, { message: "Assist_button_set_OFF" });
+                // });
+
             }else{
-                chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-                    chrome.tabs.sendMessage(tabs[0].id, { message: "Assist_button_set_ON" });
-                });
 
                 const settings = {
                     settingAssistButton: true,
@@ -91,6 +92,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 chrome.storage.sync.set(settings, function () {
                     console.log("State saved:", settings);
                 });
+
+                // chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+                //     chrome.tabs.sendMessage(tabs[0].id, { message: "Assist_button_set_ON" });
+                // });
             }
         });
     })

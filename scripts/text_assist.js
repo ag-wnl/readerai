@@ -114,12 +114,14 @@ function doButton(){
 
     //css button styling
     btn.textContent = "\u2714";
-    btn.style.backgroundColor = " #48abe0";
-    btn.style.color = "white";
+    btn.style.backgroundColor = "#ccccff";
+    btn.style.color = "#666699";
     btn.style.border = "none";
     btn.style.borderRadius = "50%"
     btn.style.position = "absolute";
-    btn.style.borderWidth = "0";
+    btn.style.borderWidth = "2px";
+    btn.style.width = "24px";
+    btn.style.height = "24px";
     btn.style.fontFamily = "JetBrains Mono";
     btn.style.fontWeight = "medium";
     btn.style.textDecoration = "none";

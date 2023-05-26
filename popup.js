@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const setting_highlight = document.getElementById('highlight_btn');
     const setting_text_assist = document.getElementById('assist_btn_popup');
 
-    chrome.storage.sync.get(["settingHighlight", "setting_textAssist"], function(data) {
+    // Taking action according to user selected data saved in browser
+    chrome.storage.sync.get(["settingHighlight", "setting_textAssist", "settingAssistButton"], function(data) {
         if(data.settingHighlight){
             setting_highlight.style.backgroundColor = "cyan";
             setting_highlight.textContent = "Un-Highlight!";
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    //defining button click action triggers
     var executeButton = document.getElementById('highlight_btn');
     executeButton.addEventListener('click', function() {
         const initialText = "Highlight!";
@@ -55,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     });
 
+    //to toggle theme (dark/light) of the webpage
     document.getElementById("dark_mode_toggle").addEventListener("click", function(){
         isToggled = !isToggled;
         if(isToggled){
@@ -63,6 +66,33 @@ document.addEventListener('DOMContentLoaded', function() {
         else{
             chrome.runtime.sendMessage({action : 'dark-mode-undo'});
         }
+    })
+
+    document.getElementById("assist_btn_popup").addEventListener("click", function() {
+        
+        chrome.storage.sync.get(["settingHighlight", "setting_textAssist", "settingAssistButton"], function(data) {
+            if(data.settingAssistButton){
+
+                const settings = {
+                    settingAssistButton: false,
+                };
+                chrome.storage.sync.set(settings, function () {
+                    console.log("State saved:", settings);
+                });
+
+            }else{
+                chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+                    chrome.tabs.sendMessage(tabs[0].id, { message: "Assist_button_set_ON" });
+                });
+
+                const settings = {
+                    settingAssistButton: true,
+                };
+                chrome.storage.sync.set(settings, function () {
+                    console.log("State saved:", settings);
+                });
+            }
+        });
     })
 });
 

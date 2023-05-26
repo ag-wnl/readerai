@@ -192,11 +192,12 @@ function doButton(){
     console.log("text assist button added to page!")
 }
 
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    if (message.dothis === 'activate_button') {
-        doButton();
-    }
-});
+// chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+//     if (message.dothis === 'activate_button') {
+//         doButton();
+//     }
+// });
+
 
 
 

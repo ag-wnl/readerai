@@ -1,8 +1,8 @@
 import './scripts/text_selection.js'; //text processing
-import './scripts/badge.js'; //badge when extension installed
 import './scripts/un_highlight.js'
 import './scripts/darkmode.js'
 import './scripts/text_assist.js'
+import './scripts/plot_compute.js'
 
 
 //receiving messages from popup.js and sending messages to trigger other scripts.
@@ -16,7 +16,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
     // else if (request.action === 'page_ready'){
     //     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    //         chrome.tabs.sendMessage(tabs[0].id, {dothis: 'activate_button'});
+    //         chrome.tabs.sendMessage(tabs[0].id, {dothis: 'plotter_ON'});
     //     });
     // }
     else if (request.action === 'unHighlight') {

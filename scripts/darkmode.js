@@ -1,14 +1,6 @@
 
-function loadCSSFile(filename) {
-    const linkElement = document.createElement('link');
-    linkElement.rel = 'stylesheet';
-    linkElement.href = filename;
-  
-    document.head.appendChild(linkElement);
-}
 
 function DarkMode(){
-    // loadCSSFile('dark.css');
     document.querySelector("html").style.filter = "invert(1) hue-rotate(180deg)";
 
     let dont_invert = document.querySelectorAll("img, picture, video");
@@ -21,7 +13,7 @@ function DarkMode(){
 }
 
 function UndoDarkMode(){
-    // document.querySelector("html").style.removeProperty("filter");
+
     document.querySelector("html").style.filter = "invert(0) hue-rotate(0deg)";
 
     let dont_invert = document.querySelectorAll("img, picture, video");

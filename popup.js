@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Taking action according to user selected data saved in browser
     chrome.storage.sync.get(["settingHighlight", "setting_textAssist", "settingAssistButton"], function(data) {
         if(data.settingHighlight){
-            setting_highlight.style.backgroundColor = "cyan";
+            setting_highlight.style.backgroundColor = "#FAF2FF";
             setting_highlight.textContent = "Un-Highlight!";
             chrome.runtime.sendMessage({action: 'runBackgroundjs'});
         }else{
@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+
+
     //defining button click action triggers
     var executeButton = document.getElementById('highlight_btn');
     executeButton.addEventListener('click', function() {
@@ -31,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (executeButton.textContent === "Highlight!") {
 
             executeButton.textContent = 'Un-Highlight!';
-            executeButton.style.backgroundColor = "cyan";
+            executeButton.style.backgroundColor = "#FAF2FF";
 
             const settings = {
                 settingHighlight: true,
@@ -56,6 +58,20 @@ document.addEventListener('DOMContentLoaded', function() {
         } 
 
     });
+    
+    const setting_button = document.getElementById("setting_svg");
+    if(setting_button) {
+
+        setting_button.addEventListener('click', function() {
+            // chrome.runtime.sendMessage({openTab : 'setting-page'});
+            console.log("setting button clicked.")
+
+            const url = "options.html";
+            const target = "_blank";
+            window.open(url, target);
+        });
+
+    }
 
     //to toggle theme (dark/light) of the webpage
     document.getElementById("dark_mode_toggle").addEventListener("click", function(){

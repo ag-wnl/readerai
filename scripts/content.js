@@ -76,9 +76,9 @@ function promptGen(box_text, audio_play) {
     boxx.style.width = "auto";
     boxx.style.height = "auto";
     boxx.style.padding = "5px";
-    boxx.style.margin = "2px";
+    boxx.style.margin = "4px";
     boxx.style.fontSize = "13px"
-    boxx.style.backgroundColor = "white";
+    boxx.style.backgroundColor = "#FEFFF2";
     boxx.style.fontFamily = '"JetBrains Mono", monospace';
     boxx.style.borderRadius = "3px";
     boxx.style.borderWidth = "1px";
@@ -126,6 +126,7 @@ function promptGen(box_text, audio_play) {
 
     audio_btn.addEventListener("click", function() {
         audioPlayer.play();
+        audio_btn.style.backgroundColor = "#FAF2FF";
       });
 
     console.log("added text assist box!");
@@ -250,53 +251,6 @@ function doButton(){
 
 doButton();
 
-
-// chrome.storage.sync.get(["settingHighlight", "setting_textAssist", "settingAssistButton"], function(data) {
-//     if(data.settingAssistButton){
-//         doButton();
-//     }else{
-//         console.log("Text assist button hidden.");
-//         const the_button = document.getElementById("readerai_text_assist_button");
-//         if(the_button){
-//             the_button.remove();
-//         }
-//     }
-// });
-
-
-// chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-//     console.log("starting text assist")
-//     if (message.message === "Assist_button_set_ON") {
-//         doButton();
-//     }
-// });
-
-// document.getElementById("assist_btn_popup").addEventListener("click", function() {
-        
-//     chrome.storage.sync.get(["settingHighlight", "setting_textAssist", "settingAssistButton"], function(data) {
-//         if(data.settingAssistButton){
-
-//             const settings = {
-//                 settingAssistButton: false,
-//             };
-//             chrome.storage.sync.set(settings, function () {
-//                 console.log("State saved:", settings);
-//             });
-
-//         }else{
-//             chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-//                 chrome.tabs.sendMessage(tabs[0].id, { message: "Assist_button_set_ON" });
-//             });
-
-//             const settings = {
-//                 settingAssistButton: true,
-//             };
-//             chrome.storage.sync.set(settings, function () {
-//                 console.log("State saved:", settings);
-//             });
-//         }
-//     });
-// })
 
 
 

@@ -1,0 +1,123 @@
+.box-tag {
+    font-family: "JetBrains Mono",monospace;
+    margin: 0px;
+    color: #36395A;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 17px;
+    vertical-align: middle;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 13px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(13px);
+    -ms-transform: translateX(13px);
+    transform: translateX(13px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 17px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+.navbar {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    width: 220px;
+    height: 100%;
+    background-color: #ead3f7;
+    padding: 5px;
+    align-items: center;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+    border: 1px  rgb(193, 126, 245);
+}
+
+.navbar-text {
+    font-weight: lighter;
+    width: auto;
+    color: #27293f;
+}
+
+.main-text-box {
+    padding-left: 260px;
+    padding-top: 25px;
+    font-size: 17px;
+    color: #2e103f;
+    align-items: center;
+}
+
+.sub-heading {
+    color: #36395A;
+    font-size: 30px;
+}
+
+.navbar-header {
+    margin-top: 1rem;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    padding-left: 8px;
+    padding-right: 8px;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    background-color: #FEFFF2;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+}
+
+.navbar-footer {
+    position: fixed;
+    padding: 10px;
+    bottom: 0;
+    border-top: 1px solid rgb(213, 137, 211);
+}
+
+
+

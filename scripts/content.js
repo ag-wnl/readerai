@@ -81,7 +81,7 @@ function promptGen(box_text, audio_play) {
     boxx.style.backgroundColor = "#FEFFF2";
     boxx.style.fontFamily = '"JetBrains Mono", monospace';
     boxx.style.borderRadius = "3px";
-    boxx.style.borderWidth = "1px";
+    boxx.style.border = "2px solid yellow"
     boxx.style.textDecoration = "none";
     boxx.style.position = "fixed";
     boxx.style.bottom = "4%";
@@ -113,9 +113,6 @@ function promptGen(box_text, audio_play) {
     const audioPlayer = document.createElement("audio");
     audioPlayer.setAttribute("id", "audioPlayer");
     audioPlayer.setAttribute("src", `${audio_play}`);
-    const playButton = document.getElementById("readerai_audio");
-    document.body.appendChild(audioPlayer);
-
 
     document.body.appendChild(boxx);
     const readerai_div = document.getElementById("readerai_text_prompt");
@@ -132,12 +129,41 @@ function promptGen(box_text, audio_play) {
     console.log("added text assist box!");
 
     close_button.addEventListener('click', function() {
+        close_button.style.backgroundColor = "#F67272"
         removeTextPrompt();
     });
 }
 
+const wiki_api = "https://en.wikipedia.org/api/rest_v1/page/html/"; //to get html
+const wiki_summary = "https://en.wikipedia.org/api/rest_v1/page/summary/"; //to get page summary
+// Making the summary box 
+
+async function SummaryBox (query_text) {
+    const executable_query = query_text.replaceAll(/[.,;:-]/g, ' ');
+    const filtered_query = executable_query.replaceAll(' ', '_');
+    const api_url = wiki_summary + filtered_query;    
+    try {
+        const response = await fetch(api_url);
+        const data = await response.json();
+
+        const text_summary = data.extract;
+
+        output_text = "Your Query : " + query_text + "; \n" + "Result: " + text_summary;
+        console.log(output_text);
+        if(text_summary === undefined){
+            return;
+        }
+        
+        promptGen(output_text, null);
+        
+    } catch (error) {
+        console.log('Error', error);
+    }
+}
+
 async function getDictionary(search_text) {
-    const api_url = dictionary_api + search_text;
+    const executable_query = search_text.replaceAll(/[.,;:-]/g, ' ')
+    const api_url = dictionary_api + executable_query;
     try {
         const response = await fetch(api_url);
         const data = await response.json();
@@ -156,11 +182,11 @@ async function getDictionary(search_text) {
 
         output_text = "Word : " + word + "; \n" + "Defination: " + means;
         console.log(output_text);
-        console.log(word_audio)
         promptGen(output_text, word_audio);
         
     } catch (error) {
-        console.log('Error', error);
+        SummaryBox(search_text);
+        console.log('Could not display the Meaning As: ', error);
     }
 }
 
@@ -238,8 +264,9 @@ function doButton(){
         if(prompt_text === ""){
             return;
         }
-        textBox_open = !textBox_open;
-        if(textBox_open){
+        // textBox_open = !textBox_open;
+        const prompt_exists = document.getElementById("readerai_text_prompt");
+        if(!prompt_exists){
             getDictionary(prompt_text);
         }else{
             removeTextPrompt();
@@ -252,6 +279,41 @@ function doButton(){
 doButton();
 
 
+
+
+
+//wiki infobox section 
+async function informationBox(pageTitle) {
+    try {
+        const wiki_api_url = wiki_api + `${pageTitle}`
+        const response = await fetch(wiki_api_url);
+
+        const html = await response.text(); 
+        const parser = new DOMParser();
+
+        const doc = parser.parseFromString(html, 'text/html');
+        const infocard = doc.querySelector('.infobox');
+    
+        if (infocard) {
+            const infocard_prompt = document.createElement('div');
+            infocard_prompt.innerHTML = infocard.innerHTML;
+    
+        
+            // document.body.appendChild(infocard_prompt);
+            console.log(infocard_prompt.innerHTML);
+        } else {
+            console.log('Infobox vcard table not found.');
+        }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+}
+  
+// const pageTitle = 'C++';
+  
+// informationBox(pageTitle).catch((error) => console.error('Error:', error));
+  
+  
 
 
 

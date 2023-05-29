@@ -1,12 +1,9 @@
 import './scripts/text_selection.js'; //text processing
 import './scripts/un_highlight.js'
 import './scripts/darkmode.js'
-import './scripts/text_assist.js'
 import './scripts/plot_compute.js'
 
-
 //receiving messages from popup.js and sending messages to trigger other scripts.
-
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.action === 'runBackgroundjs') {
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {

@@ -34,7 +34,7 @@ if (bodycontent){
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("title").textContent = "Welcome back, Bart";
         });
-    }
+    }   
 
     if(date){
         (date).insertAdjacentElement("afterend", badge);
@@ -53,10 +53,7 @@ if (bodycontent){
     }
 } 
 
-
 //Text-assist Button and all its funtions:
-
-let textBox_open = false; //toggle flag
 let prompt_text = "";
 let output_text = "";
 
@@ -67,7 +64,6 @@ function removeTextPrompt() {
     if(text_prompt) {
         text_prompt.remove();
     }
-    textBox_open = !textBox_open;
 }
 
 function promptGen(box_text, audio_play) {
@@ -136,8 +132,8 @@ function promptGen(box_text, audio_play) {
 
 const wiki_api = "https://en.wikipedia.org/api/rest_v1/page/html/"; //to get html
 const wiki_summary = "https://en.wikipedia.org/api/rest_v1/page/summary/"; //to get page summary
-// Making the summary box 
 
+// Making the summary box 
 async function SummaryBox (query_text) {
     const executable_query = query_text.replaceAll(/[.,;:-]/g, ' ');
     const filtered_query = executable_query.replaceAll(' ', '_');
@@ -264,7 +260,6 @@ function doButton(){
         if(prompt_text === ""){
             return;
         }
-        // textBox_open = !textBox_open;
         const prompt_exists = document.getElementById("readerai_text_prompt");
         if(!prompt_exists){
             getDictionary(prompt_text);
@@ -272,14 +267,11 @@ function doButton(){
             removeTextPrompt();
         }
     });
-
     console.log("text assist button added to page.")
 }
 
+
 doButton();
-
-
-
 
 
 //wiki infobox section 

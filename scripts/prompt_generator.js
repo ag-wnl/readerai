@@ -1,3 +1,5 @@
+// CHatGPT prompt generator
+
 async function queryChatbot(prompt) {
     const apiKey = 'api_key'; //api key
     const endpoint = 'https://api.openai.com/v1/chat/completions';

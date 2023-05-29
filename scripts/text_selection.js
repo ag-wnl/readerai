@@ -1,4 +1,5 @@
-console.log("text_selection working")
+
+//Text Selection and Highlighting
 
 function get_text(){
 
@@ -162,7 +163,7 @@ function get_text(){
         const filteredSentences = sentences.filter((sentence) => sentence.trim() !== '');       // Remove empty sentences and trim whitespace
         return filteredSentences;
     }
-
+    
     // Text Processing where text selection technique is implemented and executed.
     const p_tags = document.body.getElementsByTagName("p");
     const number_of_p_tags = p_tags.length;
@@ -209,4 +210,13 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         get_text();
         console.log('Text selection/higlight script executed');
     }
-  });
+});
+
+chrome.storage.sync.get(["settingHighlight", "setting_textAssist", "settingAssistButton"], function(data) {
+    if(data.settingHighlight){
+        get_text();
+        console.log('Text selection/higlight script executed');
+    }else{
+        return;
+    }
+});  

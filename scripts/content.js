@@ -1,7 +1,6 @@
 const paragraph = document.querySelector("p");
 const bodycontent = document.querySelector("body");
 
-
 // This section is for the reading time generator:
 
 const {
@@ -69,12 +68,14 @@ function removeTextPrompt() {
 function promptGen(box_text, audio_play) {
     const boxx = document.createElement("div");
     boxx.id = "readerai_text_prompt";
+    boxx.style.zIndex = "10000";
     boxx.style.width = "auto";
     boxx.style.height = "auto";
     boxx.style.padding = "5px";
     boxx.style.margin = "4px";
     boxx.style.fontSize = "13px"
     boxx.style.backgroundColor = "#FEFFF2";
+    boxx.style.color = "black";
     boxx.style.fontFamily = '"JetBrains Mono", monospace';
     boxx.style.borderRadius = "3px";
     boxx.style.border = "2px solid yellow"
@@ -89,6 +90,7 @@ function promptGen(box_text, audio_play) {
     
     close_button.textContent = "X";
     close_button.style.backgroundColor = "#E5E4E2";
+    close_button.style.color = "black";
     close_button.style.borderRadius = "50%";
     close_button.style.borderWidth = "0px";
     close_button.style.margin = "5px";
@@ -100,6 +102,7 @@ function promptGen(box_text, audio_play) {
     audio_btn.style.fontFamily = '"JetBrains Mono", monospace';
     audio_btn.textContent = "Pronunciation🔊";
     audio_btn.style.backgroundColor = "#E5E4E2";
+    audio_btn.style.color = "black";
     audio_btn.style.borderWidth = "0px";
     audio_btn.style.margin = "5px";
     audio_btn.style.cursor = "pointer";
@@ -188,27 +191,22 @@ async function getDictionary(search_text) {
 
 function doButton(){
     const body_content = document.querySelector("body");
-    const btn = document.createElement("button");
-    btn.id = "readerai_text_assist_button";
+    // const btn = document.createElement("button");
+    const btn = document.createElement("img");
 
-    //css button styling
-    btn.textContent = "\u2714";
-    btn.style.backgroundColor = "#ccccff";
-    btn.style.color = "#666699";
-    btn.style.border = "none";
-    btn.style.borderRadius = "50%"
+    btn.id = "readerai_text_assist_button";
+    btn.src = "https://i.imgur.com/rlzB14l.png";
     btn.style.position = "absolute";
-    btn.style.borderWidth = "2px";
-    btn.style.width = "24px";
-    btn.style.height = "24px";
-    btn.style.fontFamily = "JetBrains Mono";
-    btn.style.fontWeight = "medium";
+    btn.style.border = "none";
+    btn.style.width = "30px";
+    btn.style.height = "30px";
+    btn.style.borderRadius = "50%"
+    // btn.style.fontFamily = "JetBrains Mono";
     btn.style.textDecoration = "none";
     btn.style.boxShadow = "0 2px 4px darkslategray";
     btn.style.cursor = "pointer";
     btn.style.transition = "box-shadow .15s,transform .15s";
     btn.style.touchAction = "manipulation";
-    btn.style.whiteSpace = "nowrap";
 
     //button transformation css actions
     btn.addEventListener('mouseover', function() {

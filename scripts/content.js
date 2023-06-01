@@ -196,6 +196,7 @@ function doButton(){
 
     btn.id = "readerai_text_assist_button";
     btn.src = "https://i.imgur.com/rlzB14l.png";
+    btn.style.zIndex = "10000";
     btn.style.position = "absolute";
     btn.style.border = "none";
     btn.style.width = "30px";

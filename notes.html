@@ -4,18 +4,38 @@
     <title>Readerai Notes</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
-    <link rel="'stylesheet" href="notes_tab.css">
-
+    <link rel="stylesheet" href="notes_tab.css">
+    <!-- <script src="cke.js"></script> -->
+    <!-- <script src="text_box_cke.js"></script>  -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/super-build/ckeditor.js"></script>
+    <!-- same as above script (superbuild) -->
 </head>
 
-<body>
+<body class="body-tag">
 
-    <div id="editor">
-        
+    <div class="title-box">
+        <h2>Reader.ai Notes</h2>
     </div>
 
+    <div class="upper-panel">
+        
+        <label class="filename"> File Name : </label>
+        <input type="text" id="title-text" placeholder="Filename for the Note" required />
+        
+        <button 
+        id="save_btn" class="button_1">Save and Mark this Note!</button>
+
+    </div>
+
+    <div class="editor-container">
+        <div id="editor"></div>
+    </div>
+    
+
+    <script src="notes_script.js"></script>
+    
 </body>
 
 </html>

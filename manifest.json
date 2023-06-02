@@ -7,7 +7,7 @@
         "service_worker" : "background.js",
         "type": "module"
     },
-    "permissions" : ["storage","activeTab","tabs","scripting","webRequest","declarativeNetRequestWithHostAccess"], 
+    "permissions" : ["storage","activeTab","tabs","scripting","contextMenus","webRequest","declarativeNetRequestWithHostAccess"], 
     "action" : {
         "default_popup": "popup.html"
     },

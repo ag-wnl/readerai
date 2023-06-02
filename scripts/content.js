@@ -7,50 +7,54 @@ const {
     host, hostname, href, origin, pathname, port, protocol, search
 } = window.location
 
-if (bodycontent){
-    const text = bodycontent.textContent;
-    const wordMatchRegExp = /[^\s]+/g; 
-    const words = text.matchAll(wordMatchRegExp);
-    const wordCount = [...words].length;
+function showTime() {
+    if (bodycontent){
+        const text = bodycontent.textContent;
+        const wordMatchRegExp = /[^\s]+/g; 
+        const words = text.matchAll(wordMatchRegExp);
+        const wordCount = [...words].length;
+    
+        const readingTime = Math.round(wordCount / 270);
+        const badge = document.createElement("p");
+    
+        badge.classList.add("color-secondary-text", "type--caption");
+        badge.textContent = `⏱️ ${readingTime} min read`;
+    
+        const heading = bodycontent.querySelector("h1");
+        const heading_2 = document.querySelector("h2");
+    
+        const header_content = bodycontent.querySelector("header");
+        const date = bodycontent.querySelector("time")?.parentNode;
+        const pdf_view = document.querySelector("span");
+        const head_element = document.querySelector("head");
+        const first_div = bodycontent.querySelector("div");
+    
+        //messing with chrome pdf viewer -> later realised its an extension itself
+        if(protocol === "file:"){
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("title").textContent = "Welcome back, Bart";
+            });
+        }   
+    
+        if(date){
+            (date).insertAdjacentElement("afterend", badge);
+        }else if (!date && header_content){
+            (header_content).insertAdjacentElement("afterend", badge);
+        }else if (!date && !header_content && heading){
+            (heading).insertAdjacentElement("afterend", badge);
+        }else if(!date && !header_content && !heading && first_div){
+            (first_div).insertAdjacentElement("afterend", badge);
+        }else if(!date && !header_content && !heading && !first_div && head_element){
+            (head_element).insertAdjacentElement("afterend", badge);
+        }else if(!date && !header_content && !heading && !first_div && !head_element && heading_2){
+            (heading_2).insertAdjacentElement("afterend", badge);
+        }else if(!date && !header_content && !heading && !first_div && !head_element && !heading_2 && first_div){
+            (first_div).insertAdjacentElement("beforebegin", badge);
+        }
+    } 
+}
 
-    const readingTime = Math.round(wordCount / 270);
-    const badge = document.createElement("p");
 
-    badge.classList.add("color-secondary-text", "type--caption");
-    badge.textContent = `⏱️ ${readingTime} min read`;
-
-    const heading = bodycontent.querySelector("h1");
-    const heading_2 = document.querySelector("h2");
-
-    const header_content = bodycontent.querySelector("header");
-    const date = bodycontent.querySelector("time")?.parentNode;
-    const pdf_view = document.querySelector("span");
-    const head_element = document.querySelector("head");
-    const first_div = bodycontent.querySelector("div");
-
-    //messing with chrome pdf viewer -> later realised its an extension itself
-    if(protocol === "file:"){
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("title").textContent = "Welcome back, Bart";
-        });
-    }   
-
-    if(date){
-        (date).insertAdjacentElement("afterend", badge);
-    }else if (!date && header_content){
-        (header_content).insertAdjacentElement("afterend", badge);
-    }else if (!date && !header_content && heading){
-        (heading).insertAdjacentElement("afterend", badge);
-    }else if(!date && !header_content && !heading && first_div){
-        (first_div).insertAdjacentElement("afterend", badge);
-    }else if(!date && !header_content && !heading && !first_div && head_element){
-        (head_element).insertAdjacentElement("afterend", badge);
-    }else if(!date && !header_content && !heading && !first_div && !head_element && heading_2){
-        (heading_2).insertAdjacentElement("afterend", badge);
-    }else if(!date && !header_content && !heading && !first_div && !head_element && !heading_2 && first_div){
-        (first_div).insertAdjacentElement("beforebegin", badge);
-    }
-} 
 
 //Text-assist Button and all its funtions:
 let prompt_text = "";
@@ -269,43 +273,55 @@ function doButton(){
     console.log("text assist button added to page.")
 }
 
-
 doButton();
 
 
-//wiki infobox section 
-async function informationBox(pageTitle) {
-    try {
-        const wiki_api_url = wiki_api + `${pageTitle}`
-        const response = await fetch(wiki_api_url);
+// Note taking marker functionality
 
-        const html = await response.text(); 
-        const parser = new DOMParser();
-
-        const doc = parser.parseFromString(html, 'text/html');
-        const infocard = doc.querySelector('.infobox');
-    
-        if (infocard) {
-            const infocard_prompt = document.createElement('div');
-            infocard_prompt.innerHTML = infocard.innerHTML;
-    
-        
-            // document.body.appendChild(infocard_prompt);
-            console.log(infocard_prompt.innerHTML);
-        } else {
-            console.log('Infobox vcard table not found.');
-        }
-    } catch (error) {
-      console.error('Error:', error);
-    }
+function create_UUID(){
+    var dt = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (dt + Math.random()*16)%16 | 0;
+        dt = Math.floor(dt/16);
+        return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+    });
+    return uuid;
 }
-  
-// const pageTitle = 'C++';
-  
-// informationBox(pageTitle).catch((error) => console.error('Error:', error));
-  
-  
 
+var x = 0;
+var y = 0;
+function noteMarker(x_val, y_val) {
+    const note_btn = document.createElement("img");
+    note_btn.id = "readerai_notes_btn";
+    note_btn.src = "https://i.imgur.com/AghQInS.png"
+
+    note_btn.style.width = "25px";
+    note_btn.style.height = "25px";
+    note_btn.style.zIndex = "10000";
+    note_btn.style.position = "absolute";
+    note_btn.style.textDecoration = "none";
+    note_btn.title = "Note Marker";
+    note_btn.style.cursor = "pointer";
+    note_btn.style.left = x_val + "px";
+    note_btn.style.top = y_val + "px";
+
+    document.body.appendChild(note_btn);
+    var z = create_UUID(); //the unique id
+    
+}
+
+document.addEventListener('contextmenu', function(event) {
+    x = event.clientX - 2;
+    y = event.clientY - 5;
+    console.log("Context menu opened at coordinates: (" + x + ", " + y + ")");
+})
+
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+    if (message.add === 'note_marker') {
+        noteMarker(x,y);
+        console.log('Marker Added');
+    }
+});
 
 
 

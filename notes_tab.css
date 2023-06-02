@@ -1,30 +1,33 @@
 .body-tag {
-    padding: 2rem;
     font-family: "JetBrains Mono",monospace;
     margin: 0px;
     color: #36395A;
+    display: flex;
+    flex-direction: column;
     background-color: #FEFFF2;
 }
 
 .title-box {
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: row;
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    padding: 5px;
+    width: 100%;
+    justify-content: flex-start;
     align-items: center;
+    gap: 1rem;
     background-color: #FAF2FF;
-    margin: 7px;
-    padding-left: 10px;
-    padding-right: 10px;
-    max-width: 200px;
-    font-weight: 600;
     border-bottom: 1px solid rgb(221, 202, 255);
     box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
-    cursor: pointer;
 }
 
 .upper-panel {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-top: 2rem;
     gap: 1rem;
 }
 
@@ -80,13 +83,13 @@
 }
 
 .editor-container {
-    width: 1000px;
-    margin: 10px auto;
+    width: 97%;
+    margin: 2px auto;
 }
 
 .ck-editor__editable[role="textbox"] {
     /* editing area */
-    min-height: 300px;
+    min-height: 500px;
 }
 .ck-content .image {
     /* block images */

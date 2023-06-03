@@ -292,8 +292,10 @@ var x = 0;
 var y = 0;
 function noteMarker(x_val, y_val) {
     const note_btn = document.createElement("img");
-    note_btn.id = "readerai_notes_btn";
     note_btn.src = "https://i.imgur.com/AghQInS.png"
+
+    // const a_tag = document.createElement("a");
+    // a_tag.href = "#notes.html";
 
     note_btn.style.width = "25px";
     note_btn.style.height = "25px";
@@ -305,10 +307,11 @@ function noteMarker(x_val, y_val) {
     note_btn.style.left = x_val + "px";
     note_btn.style.top = y_val + "px";
 
-
-    document.body.appendChild(note_btn);
     var z = create_UUID(); //the unique id
-    console.log(z);
+    note_btn.id = "readerai_notes_btn" + z;
+    document.body.appendChild(note_btn);
+    // document.body.appendChild(a_tag);
+    // a_tag.appendChild(note_btn);
 
     const current_url = window.location.href.toString();
     const html_content = note_btn.outerHTML;
@@ -363,6 +366,89 @@ chrome.storage.sync.get(current_url, function(data) {
     })
     console.log("markers added");
 })
+
+
+
+function verifyMarker(buttonId) {
+    return buttonId.startsWith("readerai_notes_btn");
+}
+
+// Marker to notes functionality:
+
+function openExtensionPage() {
+    window.open(chrome.runtime.getURL("notes.html"));
+}
+
+document.addEventListener('click', function(event) {
+    var click_element = event.target;
+    var click_element_id = click_element.id;
+    if( verifyMarker(click_element_id) ) {
+        console.log(click_element_id);
+        
+        const pageURL = chrome.runtime.getURL('notes.html');
+        window.open(pageURL, '_blank');
+    }
+})
+
+
+//Marker removal via context menu:
+document.addEventListener('contextmenu', function(event) {
+    
+    var clicked_element = event.target;
+    var element_id = clicked_element.id;
+
+    if( verifyMarker(element_id) ) {
+        console.log("verified readerai marker");
+
+        event.preventDefault();
+        const removeMenuItem = document.createElement('div');
+        removeMenuItem.textContent = 'Remove Marker';
+        removeMenuItem.style.padding = '2px';
+        removeMenuItem.style.cursor = 'pointer';
+        removeMenuItem.style.backgroundColor = 'black';
+        removeMenuItem.style.color = "white";
+        removeMenuItem.style.boxShadow = "0 2px 4px darkslategray";
+        removeMenuItem.style.fontFamily = '"JetBrains Mono", monospace';
+        removeMenuItem.style.fontSize = "14px";
+        removeMenuItem.style.borderRadius = "3px";
+        removeMenuItem.style.position = 'fixed';
+        removeMenuItem.style.top = `${event.clientY + 10}px`;
+        removeMenuItem.style.left = `${event.clientX + 4}px`;
+        
+        removeMenuItem.addEventListener('click', function () { 
+            
+            const marker_selected = document.getElementById(element_id);
+            var mark_value = marker_selected.outerHTML;
+            console.log(mark_value);
+            marker_selected.remove();
+
+            chrome.storage.sync.get(current_url, function(data) { 
+                const existing_array = data[current_url] || [];
+                
+                const index_remove = existing_array.indexOf(mark_value);
+
+                if(index_remove != -1) {
+                    existing_array.splice(index_remove, 1);
+                    chrome.storage.sync.set({ [current_url]: existing_array }, function() {
+                        console.log("value removed from storage.");
+                    });
+                }
+            });
+            removeMenuItem.remove();
+        });
+        document.body.appendChild(removeMenuItem);
+
+        //to remove context menu when clicked away:
+        document.addEventListener('click', function(ev) {
+            if(!removeMenuItem.contains(ev.target)){
+                removeMenuItem.remove();
+            }
+        })
+    }
+})
+
+
+
 
 
 

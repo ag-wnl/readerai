@@ -305,8 +305,35 @@ function noteMarker(x_val, y_val) {
     note_btn.style.left = x_val + "px";
     note_btn.style.top = y_val + "px";
 
+
     document.body.appendChild(note_btn);
     var z = create_UUID(); //the unique id
+    console.log(z);
+
+    const current_url = window.location.href.toString();
+    const html_content = note_btn.outerHTML;
+    console.log(current_url);
+    console.log(html_content);
+
+    chrome.storage.sync.get(current_url, function(data) {
+        const existing_marks = data.current_url || [];
+        existing_marks.push(html_content);
+
+        const markers = { 
+            [current_url]: existing_marks 
+        };
+
+        chrome.storage.sync.set(markers, function() {
+            console.log("values appended to", markers);
+        })
+    })
+    
+    // const markers = {
+    //    [current_url] : html_content
+    // };
+    // chrome.storage.sync.set(markers, function () {
+    //     console.log("State saved:", markers);
+    // });
     
 }
 
@@ -323,6 +350,19 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     }
 });
 
+const current_url = window.location.href.toString();
+
+chrome.storage.sync.get(current_url, function(data) { 
+    const mark_array = data[current_url] || [];
+    
+    mark_array.forEach(function (value) {
+        console.log(value);
+        const mark_btn = document.createElement("div");
+        mark_btn.innerHTML = value;
+        document.body.appendChild(mark_btn);
+    })
+    console.log("markers added");
+})
 
 
 

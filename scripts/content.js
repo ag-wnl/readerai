@@ -383,10 +383,30 @@ document.addEventListener('click', function(event) {
     var click_element = event.target;
     var click_element_id = click_element.id;
     if( verifyMarker(click_element_id) ) {
-        console.log(click_element_id);
         
+        console.log(click_element_id);
+        const ele_id = click_element_id.toString();
+        
+        chrome.storage.local.get(ele_id, function(data) { 
+            const id_value = data[ele_id];
+            if(id_value){
+                chrome.storage.local.set({ Current_id : 0 }, function() {
+                    console.log("Current key set to 0, no id");
+                })
+                chrome.storage.local.set({ idShow : ele_id});
+            }else{
+                chrome.storage.local.set({ Current_id : 1 }, function() {
+                    console.log("Current key set to 1, new entry");
+                })
+                chrome.storage.local.set({ idShow : ele_id }, function() {
+                    console.log("id added to current key in storage");
+                });
+            }
+        });
+
         const pageURL = chrome.runtime.getURL('notes.html');
         window.open(pageURL, '_blank');
+        
     }
 })
 

@@ -161,12 +161,35 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
 });
 
 // Used when editing a saved document to load it with saved content.
-document.addEventListener('DOMContentLoaded', function() {
-    editor.setData( '<p>Some text.</p>' );
-})
+// document.addEventListener('DOMContentLoaded', function() {
+//     editor.setData( '<p>Some text.</p>' );
+// })
 
 
 document.getElementById("save_btn").addEventListener('click', () => {
-    const editorData = editor.getData();
+    const editorData = editor.getData().toString();
     console.log(editorData);
+
+    chrome.storage.local.get("idShow", function(data) {
+        const element_id = data.idShow.toString();
+        console.log(element_id);
+        chrome.storage.local.set({ [element_id]: editorData});
+    });
+});
+
+chrome.storage.local.get("Current_id", function(data) {
+    if(data.Current_id === 0){
+        console.log("no current id, so display previous text");
+
+        chrome.storage.local.get("idShow", function(data) {
+            const element_id = data.idShow;
+            chrome.storage.local.get(element_id, function(value) {
+                const editor_content = value[element_id];
+                console.log(editor_content);
+                if(editor_content){
+                    editor.setData( editor_content );
+                }
+            });
+        })
+    }
 });

@@ -2,6 +2,7 @@
     font-family: "JetBrains Mono",monospace;
     margin: 0px;
     color: #36395A;
+    margin-right: 3rem;
 }
 
 .switch {
@@ -119,5 +120,10 @@
     border-top: 1px solid rgb(213, 137, 211);
 }
 
+.sub-text {
+  font-size: 14px;
+  padding: 3px;
+  background-color: #f8f1fc;
+}
 
 

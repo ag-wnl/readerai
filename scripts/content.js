@@ -200,14 +200,13 @@ function doButton(){
 
     btn.id = "readerai_text_assist_button";
     btn.src = "https://i.imgur.com/rlzB14l.png";
-    btn.style.zIndex = "10000";
+    btn.style.zIndex = "100000";
     btn.style.position = "absolute";
     btn.style.border = "none";
     btn.style.width = "30px";
     btn.style.height = "30px";
     btn.style.borderRadius = "50%"
     // btn.style.fontFamily = "JetBrains Mono";
-    btn.style.textDecoration = "none";
     btn.style.boxShadow = "0 2px 4px darkslategray";
     btn.style.cursor = "pointer";
     btn.style.transition = "box-shadow .15s,transform .15s";
@@ -273,11 +272,35 @@ function doButton(){
     console.log("text assist button added to page.")
 }
 
-doButton();
+// Checking with settings page if textAsist Enabled or not
+chrome.storage.local.get("textAssist", function(data) {
+    if(data.textAssist === 1) {
+        doButton();
+    } else {
+        return;
+    }
+})
+
+// Checking for changed in settings page dynamically
+function handleStorageChange(changes, area) {
+    
+    if (area === 'local') {
+      
+      if (changes.hasOwnProperty('textAssist')) {
+        const newValue = changes.textAssist.newValue;
+        if(newValue === 1) {
+            doButton();
+        } else {
+            const assist_btn = document.getElementById("readerai_text_assist_button");
+            assist_btn.remove();
+        }
+      }
+    }
+}
+chrome.storage.onChanged.addListener(handleStorageChange);
 
 
 // Note taking marker functionality
-
 function create_UUID(){
     var dt = new Date().getTime();
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -329,20 +352,21 @@ function noteMarker(x_val, y_val) {
         chrome.storage.sync.set(markers, function() {
             console.log("values appended to", markers);
         })
-    })
-    
-    // const markers = {
-    //    [current_url] : html_content
-    // };
-    // chrome.storage.sync.set(markers, function () {
-    //     console.log("State saved:", markers);
-    // });
-    
+    })    
 }
 
 document.addEventListener('contextmenu', function(event) {
-    x = event.clientX - 2;
-    y = event.clientY - 5;
+    // x = event.clientX - 2;  //This caused error as its relative to url bar
+    // y = event.clientY - 5;
+
+    //zoom adjustment measures
+    // const rect = event.target.getBoundingClientRect();
+    // const zoomFactor = document.documentElement.clientWidth / window.innerWidth;
+    // const x = (event.clientX - rect.left) / zoomFactor;
+    // const y = (event.clientY - rect.top) / zoomFactor;
+
+    x = event.pageX - 2; 
+    y = event.pageY - 5;
     console.log("Context menu opened at coordinates: (" + x + ", " + y + ")");
 })
 
@@ -368,13 +392,11 @@ chrome.storage.sync.get(current_url, function(data) {
 })
 
 
-
 function verifyMarker(buttonId) {
     return buttonId.startsWith("readerai_notes_btn");
 }
 
 // Marker to notes functionality:
-
 function openExtensionPage() {
     window.open(chrome.runtime.getURL("notes.html"));
 }
@@ -406,7 +428,6 @@ document.addEventListener('click', function(event) {
 
         const pageURL = chrome.runtime.getURL('notes.html');
         window.open(pageURL, '_blank');
-        
     }
 })
 
@@ -422,6 +443,7 @@ document.addEventListener('contextmenu', function(event) {
 
         event.preventDefault();
         const removeMenuItem = document.createElement('div');
+        removeMenuItem.style.zIndex = '10000';
         removeMenuItem.textContent = 'Remove Marker';
         removeMenuItem.style.padding = '2px';
         removeMenuItem.style.cursor = 'pointer';
@@ -441,6 +463,9 @@ document.addEventListener('contextmenu', function(event) {
             var mark_value = marker_selected.outerHTML;
             console.log(mark_value);
             marker_selected.remove();
+
+            const markDataRemove = element_id.toString();
+            chrome.storage.local.remove(markDataRemove); //saving storage, removing deleted marker data
 
             chrome.storage.sync.get(current_url, function(data) { 
                 const existing_array = data[current_url] || [];

@@ -160,12 +160,8 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
     editor = newEditor;
 });
 
-// Used when editing a saved document to load it with saved content.
-// document.addEventListener('DOMContentLoaded', function() {
-//     editor.setData( '<p>Some text.</p>' );
-// })
 
-
+//Adding and fetching data from chrome storage:
 document.getElementById("save_btn").addEventListener('click', () => {
     const editorData = editor.getData().toString();
     console.log(editorData);

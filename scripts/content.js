@@ -282,6 +282,8 @@ function create_UUID(){
 
 var x = 0;
 var y = 0;
+var width = window.innerWidth;
+var height = window.innerHeight;
 function noteMarker(x_val, y_val) {
     const note_btn = document.createElement("img");
     note_btn.src = "https://i.imgur.com/AghQInS.png"
@@ -296,14 +298,13 @@ function noteMarker(x_val, y_val) {
     note_btn.style.textDecoration = "none";
     note_btn.title = "Note Marker";
     note_btn.style.cursor = "pointer";
-    note_btn.style.left = x_val + "px";
+    note_btn.style.left = x_val + "px";  
     note_btn.style.top = y_val + "px";
 
     var z = create_UUID(); //the unique id
     note_btn.id = "readerai_notes_btn" + z;
     document.body.appendChild(note_btn);
-    // document.body.appendChild(a_tag);
-    // a_tag.appendChild(note_btn);
+
 
     const current_url = window.location.href.toString();
     const html_content = note_btn.outerHTML;
@@ -311,7 +312,8 @@ function noteMarker(x_val, y_val) {
     console.log(html_content);
 
     chrome.storage.sync.get(current_url, function(data) {
-        const existing_marks = data.current_url || [];
+
+        const existing_marks = data[current_url] || [];  
         existing_marks.push(html_content);
 
         const markers = { 
@@ -321,7 +323,8 @@ function noteMarker(x_val, y_val) {
         chrome.storage.sync.set(markers, function() {
             console.log("values appended to", markers);
         })
-    })    
+    }) 
+
 }
 
 document.addEventListener('contextmenu', function(event) {
@@ -460,7 +463,6 @@ document.addEventListener('contextmenu', function(event) {
         })
     }
 })
-
 
 
 

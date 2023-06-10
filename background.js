@@ -31,19 +31,19 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 });
 
-// chrome.runtime.onInstalled.addListener(() => {
-//     chrome.contextMenus.create({
-//         id:"1",
-//         title: "Add Note Marker",
-//         contexts: ["page"],
-//     })
-// });
+chrome.runtime.onInstalled.addListener(() => {
+    chrome.contextMenus.create({
+        id:"1",
+        title: "Add Note Marker",
+        contexts: ["page"],
+    })
+});
 
-chrome.contextMenus.create({
-    id:"1",
-    title: "Add Note Marker",
-    contexts: ["page"],
-})
+// chrome.contextMenus.create({
+//     id:"1",
+//     title: "Add Note Marker",
+//     contexts: ["page"],
+// })
 
 chrome.contextMenus.onClicked.addListener(function() {
     console.log('contextmenu clicked');

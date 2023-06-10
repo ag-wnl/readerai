@@ -7,7 +7,6 @@ function un_highlighted(){
         var textNode = document.createTextNode(mark_text);
         mark_element.parentNode.replaceChild(textNode, mark_element);
     });
-    console.log("Un-Highlighted the text Content.")
 }
 
 //receiving message from background.js to execute script

@@ -167,7 +167,7 @@ function get_text(){
     // Text Processing where text selection technique is implemented and executed.
     const p_tags = document.body.getElementsByTagName("p");
     const number_of_p_tags = p_tags.length;
-    console.log("the number of p tags : " + number_of_p_tags);
+    // console.log("the number of p tags : " + number_of_p_tags);
     var final_text_selection = "";
 
     //iterating and checking for relevant sentences from <p> tags and compiling them.
@@ -201,21 +201,21 @@ function get_text(){
             }
         }
     }
-    console.log(final_text_selection);
+    // console.log(final_text_selection);
 }
   
 //receiving message from background.js to execute script
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if (message.run === 'highlight_text') {
         get_text();
-        console.log('Text selection/higlight script executed');
+        // console.log('Text selection/higlight script executed');
     }
 });
 
 chrome.storage.sync.get(["settingHighlight", "setting_textAssist", "settingAssistButton"], function(data) {
     if(data.settingHighlight){
         get_text();
-        console.log('Text selection/higlight script executed');
+        // console.log('Text selection/higlight script executed');
     }else{
         return;
     }

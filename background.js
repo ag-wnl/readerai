@@ -36,7 +36,9 @@ chrome.runtime.onInstalled.addListener(() => {
         id:"1",
         title: "Add Note Marker",
         contexts: ["page"],
-    })
+    });
+
+    chrome.storage.local.set({"textAssist" : 1});
 });
 
 // chrome.contextMenus.create({
@@ -51,6 +53,7 @@ chrome.contextMenus.onClicked.addListener(function() {
         chrome.tabs.sendMessage(tabs[0].id, {add: 'note_marker'});
     });
 });
+
 
 
 

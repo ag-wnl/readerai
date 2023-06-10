@@ -5,15 +5,13 @@ let isHighlightEnabled = false;
 
 //sending message to background.js to execute needful after highlight button on popup clicked
 document.addEventListener('DOMContentLoaded', function() {
-    chrome.runtime.sendMessage({action: 'page_ready'});
-
+    
         chrome.storage.sync.get("read_time", function(val) {
             if(val.read_time) {
                 const time_display = val.read_time.toString();
                 console.log(time_display);
                 const time_wrapper = document.getElementById("read_time_display");
                 time_wrapper.textContent = time_display;
-                console.log("displayed reading time");
             }
         })
 

@@ -44,35 +44,49 @@ function promptGen(box_text, audio_play) {
     boxx.style.zIndex = "10000";
     boxx.style.width = "auto";
     boxx.style.height = "auto";
-    boxx.style.padding = "5px";
+    boxx.style.padding = "8px";
     boxx.style.margin = "4px";
     boxx.style.fontSize = "13px"
-    boxx.style.backgroundColor = "#FEFFF2";
+    boxx.style.backgroundColor = "#FEF7FF";
     boxx.style.color = "black";
-    boxx.style.fontFamily = '"JetBrains Mono", monospace';
+    boxx.style.fontFamily = '"Plus Jakarta Sans", sans-serif';
     boxx.style.borderRadius = "3px";
-    boxx.style.border = "2px solid yellow"
+    boxx.style.border = "2px solid #e38fff"
     boxx.style.textDecoration = "none";
     boxx.style.position = "fixed";
     boxx.style.bottom = "4%";
     boxx.style.right = "70%";
+    boxx.style.transition = "1s";
     boxx.style.boxShadow = "0 2px 4px darkslategray";
 
     boxx.textContent = box_text;
-    const close_button = document.createElement("button");
+    // const close_button = document.createElement("button");
     
-    close_button.textContent = "X";
-    close_button.style.backgroundColor = "#E5E4E2";
-    close_button.style.color = "black";
+    // close_button.textContent = "X";
+    // close_button.style.backgroundColor = "#E5E4E2";
+    // close_button.style.color = "black";
+    // close_button.style.borderRadius = "50%";
+    // close_button.style.borderWidth = "0px";
+    // close_button.style.margin = "5px";
+    // close_button.style.cursor = "pointer";
+    // close_button.style.boxShadow = "rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset";
+
+    const close_button = document.createElement("img");
+    
+    close_button.src = 'https://i.imgur.com/xJzPEUt.png';
+    close_button.style.width = "15px";
+    close_button.style.height = "15px";
+    close_button.style.margin = "7px";
+    close_button.style.padding = "2px";
+    close_button.style.border = "1px solid #D891FE"
+    close_button.style.backgroundColor = "#EEEEEE";
     close_button.style.borderRadius = "50%";
-    close_button.style.borderWidth = "0px";
-    close_button.style.margin = "5px";
     close_button.style.cursor = "pointer";
     close_button.style.boxShadow = "rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset";
 
     const audio_btn = document.createElement("button");
     audio_btn.id = "readerai_audio";
-    audio_btn.style.fontFamily = '"JetBrains Mono", monospace';
+    audio_btn.style.fontFamily = '"Plus Jakarta Sans", sans-serif';
     audio_btn.textContent = "Pronunciation🔊";
     audio_btn.style.backgroundColor = "#E5E4E2";
     audio_btn.style.color = "black";
@@ -103,6 +117,8 @@ function promptGen(box_text, audio_play) {
     close_button.addEventListener('click', function() {
         close_button.style.backgroundColor = "#F67272"
         removeTextPrompt();
+        const rem_button = document.getElementById("readerai_text_assist_button");
+        rem_button.style.visibility = "hidden";
     });
 }
 
@@ -417,14 +433,15 @@ document.addEventListener('contextmenu', function(event) {
         const removeMenuItem = document.createElement('div');
         removeMenuItem.style.zIndex = '10000';
         removeMenuItem.textContent = 'Remove Marker';
-        removeMenuItem.style.padding = '2px';
+        removeMenuItem.style.padding = '5px';
         removeMenuItem.style.cursor = 'pointer';
-        removeMenuItem.style.backgroundColor = 'black';
+        removeMenuItem.style.backgroundColor = '#282829';
         removeMenuItem.style.color = "white";
         removeMenuItem.style.boxShadow = "0 2px 4px darkslategray";
-        removeMenuItem.style.fontFamily = '"JetBrains Mono", monospace';
-        removeMenuItem.style.fontSize = "14px";
-        removeMenuItem.style.borderRadius = "3px";
+        removeMenuItem.style.fontFamily = '"Plus Jakarta Sans", sans-serif';
+        /* font-family: 'Plus Jakarta Sans', sans-serif; */
+        removeMenuItem.style.fontSize = "12px";
+        removeMenuItem.style.borderRadius = "4px";
         removeMenuItem.style.position = 'fixed';
         removeMenuItem.style.top = `${event.clientY + 10}px`;
         removeMenuItem.style.left = `${event.clientX + 4}px`;

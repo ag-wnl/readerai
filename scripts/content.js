@@ -46,10 +46,11 @@ function promptGen(box_text, audio_play) {
     boxx.style.height = "auto";
     boxx.style.padding = "8px";
     boxx.style.margin = "4px";
-    boxx.style.fontSize = "13px"
-    boxx.style.backgroundColor = "#FEF7FF";
+    boxx.style.fontSize = "12px"
+    boxx.style.backgroundColor = "white";
     boxx.style.color = "black";
-    boxx.style.fontFamily = '"Plus Jakarta Sans", sans-serif';
+    // boxx.style.fontFamily = '"Plus Jakarta Sans", sans-serif';
+    boxx.style.fontFamily = "Verdana, sans-serif";
     boxx.style.borderRadius = "3px";
     boxx.style.border = "2px solid #e38fff"
     boxx.style.textDecoration = "none";
@@ -60,33 +61,37 @@ function promptGen(box_text, audio_play) {
     boxx.style.boxShadow = "0 2px 4px darkslategray";
 
     boxx.textContent = box_text;
-    // const close_button = document.createElement("button");
+    const close_button = document.createElement("button");
     
-    // close_button.textContent = "X";
-    // close_button.style.backgroundColor = "#E5E4E2";
-    // close_button.style.color = "black";
-    // close_button.style.borderRadius = "50%";
-    // close_button.style.borderWidth = "0px";
-    // close_button.style.margin = "5px";
-    // close_button.style.cursor = "pointer";
-    // close_button.style.boxShadow = "rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset";
-
-    const close_button = document.createElement("img");
-    
-    close_button.src = 'https://i.imgur.com/xJzPEUt.png';
-    close_button.style.width = "15px";
-    close_button.style.height = "15px";
-    close_button.style.margin = "7px";
-    close_button.style.padding = "2px";
-    close_button.style.border = "1px solid #D891FE"
-    close_button.style.backgroundColor = "#EEEEEE";
-    close_button.style.borderRadius = "50%";
+    close_button.textContent = "X";
+    close_button.style.backgroundColor = "#E5E4E2";
+    close_button.style.color = "black";
+    close_button.style.borderRadius = "5px";
+    close_button.style.borderWidth = "0px";
+    close_button.style.padding = "3px";
+    close_button.style.margin = "5px";
     close_button.style.cursor = "pointer";
+    close_button.style.transition = "1s";
     close_button.style.boxShadow = "rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset";
+
+
+    //Different Close button
+    // const close_button = document.createElement("img");
+    // close_button.src = 'https://i.imgur.com/xJzPEUt.png';
+    // close_button.style.width = "18px";
+    // close_button.style.height = "18px";
+    // close_button.style.marginRight = "4px";
+    // close_button.style.padding = "2px";
+    // close_button.style.border = "1px solid #D891FE"
+    // close_button.style.backgroundColor = "#EEEEEE";
+    // close_button.style.borderRadius = "50%";
+    // close_button.style.cursor = "pointer";
+    // close_button.style.transition = "1s";
+    // close_button.style.boxShadow = "rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset";
 
     const audio_btn = document.createElement("button");
     audio_btn.id = "readerai_audio";
-    audio_btn.style.fontFamily = '"Plus Jakarta Sans", sans-serif';
+    audio_btn.style.fontFamily = "Verdana, sans-serif";
     audio_btn.textContent = "Pronunciation🔊";
     audio_btn.style.backgroundColor = "#E5E4E2";
     audio_btn.style.color = "black";
@@ -94,6 +99,7 @@ function promptGen(box_text, audio_play) {
     audio_btn.style.margin = "5px";
     audio_btn.style.cursor = "pointer";
     audio_btn.style.padding = "3px";
+    audio_btn.style.transition = "1s";
     audio_btn.style.boxShadow = "rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset"
 
     const audioPlayer = document.createElement("audio");
@@ -110,12 +116,25 @@ function promptGen(box_text, audio_play) {
     audio_btn.addEventListener("click", function() {
         audioPlayer.play();
         audio_btn.style.backgroundColor = "#FAF2FF";
-      });
+    });
+    audio_btn.addEventListener('mouseover', function() {
+        audio_btn.style.backgroundColor = "#EDADFF";
+    })
+    audio_btn.addEventListener('mouseout', function() {
+        audio_btn.style.backgroundColor = "#E5E4E2";
+    })
 
     console.log("added text assist box!");
 
+
+    close_button.addEventListener('mouseover', function() {
+        close_button.style.backgroundColor = "#EDADFF";
+    })
+    close_button.addEventListener('mouseout', function() {
+        close_button.style.backgroundColor = "#EEEEEE";
+    })
+
     close_button.addEventListener('click', function() {
-        close_button.style.backgroundColor = "#F67272"
         removeTextPrompt();
         const rem_button = document.getElementById("readerai_text_assist_button");
         rem_button.style.visibility = "hidden";

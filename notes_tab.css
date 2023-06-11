@@ -1,13 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200&display=swap');
+
 .body-tag {
-    font-family: "JetBrains Mono",monospace;
     margin: 0px;
     color: #36395A;
     display: flex;
     flex-direction: column;
-    background-color: #FEFFF2;
+    background-color: #fff7fc;
 }
 
 .title-box {
+    font-family: 'Plus Jakarta Sans', sans-serif;
     display: flex;
     flex-direction: row;
     position: absolute;
@@ -17,10 +19,13 @@
     width: 100%;
     justify-content: flex-start;
     align-items: center;
-    gap: 1rem;
+    font-weight: 900;
+    font-size: 18px;
+    color: black;
+    gap: 0.7rem;
     background-color: #FAF2FF;
     border-bottom: 1px solid rgb(221, 202, 255);
-    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+    /* box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset; */
 }
 
 .upper-panel {

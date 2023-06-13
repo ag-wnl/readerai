@@ -8,7 +8,6 @@ const {
 } = window.location
 
 
-
 function showTime() {
     if (bodycontent){
         const curr_url = window.location.href.toString();
@@ -24,6 +23,10 @@ function showTime() {
 }
 showTime();
 
+const font_link = document.createElement('link');
+font_link.rel = 'stylesheet';
+font_link.href = 'https://fonts.googleapis.com/css2?family=Inter&display=swap';
+document.head.appendChild(font_link);
 
 //Text-assist Button and all its funtions:
 let prompt_text = "";
@@ -43,64 +46,73 @@ function promptGen(box_text, audio_play) {
     boxx.id = "readerai_text_prompt";
     boxx.style.zIndex = "10000";
     boxx.style.width = "auto";
+    boxx.style.maxWidth = "400px";
     boxx.style.height = "auto";
-    boxx.style.padding = "8px";
+    boxx.style.padding = "10px";
     boxx.style.margin = "4px";
-    boxx.style.fontSize = "12px"
     boxx.style.backgroundColor = "white";
     boxx.style.color = "black";
     // boxx.style.fontFamily = '"Plus Jakarta Sans", sans-serif';
-    boxx.style.fontFamily = "Verdana, sans-serif";
+    boxx.style.fontFamily = "'Inter', sans-serif";
     boxx.style.borderRadius = "3px";
     boxx.style.border = "2px solid #e38fff"
     boxx.style.textDecoration = "none";
     boxx.style.position = "fixed";
-    boxx.style.bottom = "4%";
-    boxx.style.right = "70%";
+    boxx.style.bottom = "5px";
+    boxx.style.left = "5px";
+    boxx.style.display = "flex";
+    boxx.style.flexDirection = "column";
+    boxx.style.gap = "5px";
     boxx.style.transition = "1s";
     boxx.style.boxShadow = "0 2px 4px darkslategray";
 
-    boxx.textContent = box_text;
+    const title_box = document.createElement("div");
+    title_box.id = "readerai_textbox_title";
+    title_box.textContent = "Reader.ai";
+    title_box.style.fontFamily = "'Inter', sans-serif";
+    title_box.style.fontSize = "18px";
+    title_box.style.marginBottom = "8px";
+    title_box.style.fontWeight = "bolder";
+
+    const text_box = document.createElement("div");
+    text_box.id = "text_content_prompt";
+    text_box.style.fontSize = "12px";
+    text_box.textContent = box_text;
+
+    // boxx.textContent = box_text;
     const close_button = document.createElement("button");
     
-    close_button.textContent = "X";
+    close_button.textContent = "Close";
     close_button.style.backgroundColor = "#E5E4E2";
     close_button.style.color = "black";
-    close_button.style.borderRadius = "5px";
+    close_button.style.fontFamily = "'Inter', sans-serif";
+    close_button.style.borderRadius = "3px";
+    close_button.style.fontSize = "12px";
     close_button.style.borderWidth = "0px";
-    close_button.style.padding = "3px";
+    close_button.style.padding = "4px";
     close_button.style.margin = "5px";
     close_button.style.cursor = "pointer";
     close_button.style.transition = "1s";
     close_button.style.boxShadow = "rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset";
 
-
-    //Different Close button
-    // const close_button = document.createElement("img");
-    // close_button.src = 'https://i.imgur.com/xJzPEUt.png';
-    // close_button.style.width = "18px";
-    // close_button.style.height = "18px";
-    // close_button.style.marginRight = "4px";
-    // close_button.style.padding = "2px";
-    // close_button.style.border = "1px solid #D891FE"
-    // close_button.style.backgroundColor = "#EEEEEE";
-    // close_button.style.borderRadius = "50%";
-    // close_button.style.cursor = "pointer";
-    // close_button.style.transition = "1s";
-    // close_button.style.boxShadow = "rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset";
-
     const audio_btn = document.createElement("button");
     audio_btn.id = "readerai_audio";
-    audio_btn.style.fontFamily = "Verdana, sans-serif";
-    audio_btn.textContent = "Pronunciation🔊";
+    audio_btn.style.fontFamily = "'Inter', sans-serif";
+    audio_btn.textContent = "Pronunciation";
     audio_btn.style.backgroundColor = "#E5E4E2";
     audio_btn.style.color = "black";
+    audio_btn.style.fontSize = "12px";
     audio_btn.style.borderWidth = "0px";
+    audio_btn.style.borderRadius = "3px";
     audio_btn.style.margin = "5px";
     audio_btn.style.cursor = "pointer";
-    audio_btn.style.padding = "3px";
+    audio_btn.style.padding = "4px";
     audio_btn.style.transition = "1s";
-    audio_btn.style.boxShadow = "rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset"
+    audio_btn.style.boxShadow = "rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset";
+
+    const button_div = document.createElement("div");
+    button_div.style.display = "flex";
+    button_div.style.flexDirection = "row";
 
     const audioPlayer = document.createElement("audio");
     audioPlayer.setAttribute("id", "audioPlayer");
@@ -108,9 +120,13 @@ function promptGen(box_text, audio_play) {
 
     document.body.appendChild(boxx);
     const readerai_div = document.getElementById("readerai_text_prompt");
-    readerai_div.appendChild(audio_btn);
-    readerai_div.appendChild(audioPlayer);
-    readerai_div.appendChild(close_button);
+    readerai_div.appendChild(title_box);
+    readerai_div.appendChild(text_box);
+
+    button_div.appendChild(audio_btn);
+    button_div.appendChild(audioPlayer);
+    button_div.appendChild(close_button);
+    readerai_div.appendChild(button_div);
 
 
     audio_btn.addEventListener("click", function() {
@@ -155,7 +171,7 @@ async function SummaryBox (query_text) {
 
         const text_summary = data.extract;
 
-        output_text = "Your Query : " + query_text + "; \n" + "Result: " + text_summary;
+        output_text = "Your Query : " + query_text + ": \n" + text_summary;
         console.log(output_text);
         if(text_summary === undefined){
             return;
@@ -187,7 +203,7 @@ async function getDictionary(search_text) {
             }
         }
 
-        output_text = "Word : " + word + "; \n" + "Defination: " + means;
+        output_text = "Word : " + word + ". \n" + means;
         console.log(output_text);
         promptGen(output_text, word_audio);
         
@@ -200,42 +216,57 @@ async function getDictionary(search_text) {
 function doButton(){
     const body_content = document.querySelector("body");
     // const btn = document.createElement("button");
-    const btn = document.createElement("img");
+    const btn = document.createElement("div");
+
+    const div1 = document.createElement("img");
+    div1.src = chrome.runtime.getURL("textsearch.svg")
+    div1.style.paddingRight = "6px";
+    div1.title = "ReaderAI Search";
+    div1.style.borderRight = "0.5px solid grey";
+    div1.addEventListener('mouseover', function() {
+        div1.style.backgroundColor = "#F9E5FF";
+    })
+    div1.addEventListener('mouseover', function() {
+        div1.style.backgroundColor = "#F9E5FF";
+    })
+    div1.addEventListener('mouseout', function() {
+        div1.style.backgroundColor = "white";
+    })
+
+    
+    const div2 = document.createElement("img");
+    div2.src = chrome.runtime.getURL("translate.svg")
+    div2.style.paddingRight = "2px";
+    div2.addEventListener('mouseover', function() {
+        div2.style.backgroundColor = "#F9E5FF";
+    })
+    div2.addEventListener('mouseout', function() {
+        div2.style.backgroundColor = "white";
+    })
 
     btn.id = "readerai_text_assist_button";
-    btn.src = "https://i.imgur.com/rlzB14l.png";
-    btn.style.zIndex = "100000";
+    btn.textContent = "";
+    btn.style.backgroundColor = "white";
+    btn.style.padding = "2px";
+    btn.style.color = "black";
     btn.style.position = "absolute";
+    btn.style.zIndex = "999999 !important";
     btn.style.border = "none";
-    btn.style.width = "30px";
-    btn.style.height = "30px";
-    btn.style.borderRadius = "50%"
+    btn.style.borderRadius = "5px";
+    btn.style.width = "60px";
+    btn.style.height = "25px";
+    btn.style.display = "flex";
+    btn.style.flexDirection = "row";
+    btn.style.gap = "5px";
     // btn.style.fontFamily = "JetBrains Mono";
     btn.style.boxShadow = "0 2px 4px darkslategray";
     btn.style.cursor = "pointer";
-    btn.style.transition = "box-shadow .15s,transform .15s";
-    btn.style.touchAction = "manipulation";
 
-    //button transformation css actions
-    btn.addEventListener('mouseover', function() {
-        this.style.boxShadow = 'rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset';
-        this.style.transform = 'translateY(-2px)';
-    });
-    btn.addEventListener('focus', function(){
-        this.style.boxShadow = '#D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset';
-    });
-    btn.addEventListener('mousedown', function() {
-        this.style.boxShadow = '#D6D6E7 0 3px 7px inset';
-        this.style.transform = 'translateY(2px)';
-    });
-    btn.addEventListener('mouseup', function() {
-        this.style.boxShadow = '';
-        this.style.transform = '';
-    });
 
-    //to get selected highlighted text by user.
     document.body.appendChild(btn);
-    
+    btn.appendChild(div1);
+    btn.appendChild(div2);
+
     document.addEventListener('mouseup', function() {
         
         btn.style.visibility = "visible";   
@@ -262,7 +293,7 @@ function doButton(){
         }
     });
 
-    btn.addEventListener('click', function() {
+    div1.addEventListener('click', function() {
         if(prompt_text === ""){
             return;
         }

@@ -8,14 +8,43 @@
     background-color: #fff7fc;
 }
 
+.logotext {
+  padding-right: 1rem;
+  margin-right: 1rem;
+  border-right: 1px solid #595a64;
+}
+
+.button_2 {
+  background-color: rgb(253, 253, 253);
+  padding: 3px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  /* transition: 1s; */
+}
+
+.button_2:hover {
+  background-color: rgb(252, 244, 255);
+  /* transition: 1s; */
+  transform: translateY(-2px);
+}
+
+.button_2:active {
+  background-color: rgb(43, 255, 96);
+  transform: translateY(2px);
+}
+
 .title-box {
     font-family: 'Plus Jakarta Sans', sans-serif;
+    z-index: 10;
+    top: 0;
     display: flex;
     flex-direction: row;
     position: absolute;
-    z-index: 10;
-    top: 0;
-    padding: 5px;
+    padding: 8px;
     width: 100%;
     justify-content: flex-start;
     align-items: center;
@@ -32,15 +61,15 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 2rem;
+    margin-top: 5rem;
     gap: 1rem;
 }
 
 .button_1 {
     align-items: center;
-    margin-top: 14px;
+    margin-top: 8px;
     appearance: none;
-    margin-left: 1rem;
+    margin-left: 8px;
     margin-bottom: 1rem;
     background-color: #FCFCFD;
     border-radius: 4px;

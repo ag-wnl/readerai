@@ -13,7 +13,7 @@
     },
     "web_accessible_resources": [
         {
-          "resources": [ "notes.html" ],
+          "resources": [ "notes.html", "textsearch.svg", "translate.svg"],
           "matches": [ "<all_urls>" ]
         }
       ],

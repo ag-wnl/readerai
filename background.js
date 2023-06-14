@@ -41,11 +41,6 @@ chrome.runtime.onInstalled.addListener(() => {
     chrome.storage.local.set({"textAssist" : 1});
 });
 
-// chrome.contextMenus.create({
-//     id:"1",
-//     title: "Add Note Marker",
-//     contexts: ["page"],
-// })
 
 chrome.contextMenus.onClicked.addListener(function() {
     console.log('contextmenu clicked');

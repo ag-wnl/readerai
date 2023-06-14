@@ -11,13 +11,16 @@ const {
 function showTime() {
     if (bodycontent){
         const curr_url = window.location.href.toString();
+        const time_url = 'rai_time' + curr_url;
+        console.log(time_url);
         const text = bodycontent.textContent;
         const wordMatchRegExp = /[^\s]+/g; 
         const words = text.matchAll(wordMatchRegExp);
         const wordCount = [...words].length;
     
         const readingTime = Math.round(wordCount / 270).toString() + " minutes";
-        chrome.storage.sync.set({read_time: readingTime});
+        // chrome.storage.sync.set({read_time: readingTime});
+        chrome.storage.sync.set({[time_url] : readingTime});
         console.log(readingTime);
     } 
 }
@@ -214,8 +217,6 @@ async function getDictionary(search_text) {
 }
 
 function doButton(){
-    const body_content = document.querySelector("body");
-    // const btn = document.createElement("button");
     const btn = document.createElement("div");
 
     const div1 = document.createElement("img");
@@ -258,7 +259,7 @@ function doButton(){
     btn.style.display = "flex";
     btn.style.flexDirection = "row";
     btn.style.gap = "5px";
-    // btn.style.fontFamily = "JetBrains Mono";
+    btn.style.visibility = "hidden"; //not visible when webpage loaded 
     btn.style.boxShadow = "0 2px 4px darkslategray";
     btn.style.cursor = "pointer";
 

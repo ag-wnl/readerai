@@ -3,17 +3,27 @@ console.log("Pop-up scripts are working")
 let isToggled = false;
 let isHighlightEnabled = false;
 
-//sending message to background.js to execute needful after highlight button on popup clicked
 document.addEventListener('DOMContentLoaded', function() {
     
-        chrome.storage.sync.get("read_time", function(val) {
-            if(val.read_time) {
-                const time_display = val.read_time.toString();
+
+    //Estimated Time Display
+    var curr_tab_url = '';
+    chrome.tabs.query({active:true,currentWindow:true},function(tab){
+
+        //Be aware that `tab` is an array of Tabs 
+        curr_tab_url = tab[0].url.toString();
+        const query_url = 'rai_time' + curr_tab_url;
+        console.log(query_url);
+
+        chrome.storage.sync.get(query_url, function(val) {
+            if(val[query_url]) {
+                const time_display = val[query_url].toString();
                 console.log(time_display);
                 const time_wrapper = document.getElementById("read_time_display");
                 time_wrapper.textContent = time_display;
             }
         })
+    });
 
 
     const setting_highlight = document.getElementById('highlight_btn');

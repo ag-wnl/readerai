@@ -126,8 +126,10 @@ function promptGen(box_text, audio_play) {
     readerai_div.appendChild(title_box);
     readerai_div.appendChild(text_box);
 
-    button_div.appendChild(audio_btn);
-    button_div.appendChild(audioPlayer);
+    if(audio_play != null) {
+        button_div.appendChild(audio_btn);
+        button_div.appendChild(audioPlayer);   
+    }
     button_div.appendChild(close_button);
     readerai_div.appendChild(button_div);
 
@@ -208,7 +210,12 @@ async function getDictionary(search_text) {
 
         output_text = "Word : " + word + ". \n" + means;
         console.log(output_text);
-        promptGen(output_text, word_audio);
+        if (word_audio != "") {
+            promptGen(output_text, word_audio);
+        }else {
+            promptGen(output_text, null);
+        }
+        // promptGen(output_text, word_audio);
         
     } catch (error) {
         SummaryBox(search_text);

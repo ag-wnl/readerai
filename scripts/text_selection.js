@@ -1,6 +1,7 @@
 
 //Text Selection and Highlighting
 
+
 function get_text(){
 
     Set.prototype.union = function(setB) {
@@ -158,9 +159,10 @@ function get_text(){
 
     // Sentence splitting function to split string into array of sentences.
     function splitSentences(text) {
-        const sentenceRegex = /[.!?:-]+/g;        // Regular expression to split sentences based on punctuation marks.
+        const sentenceRegex = /[.!?:-]+/g;     // Regular expression to split sentences based on punctuation marks.
         const sentences = text.split(sentenceRegex);
-        const filteredSentences = sentences.filter((sentence) => sentence.trim() !== '');       // Remove empty sentences and trim whitespace
+        const filteredSentences = sentences.filter((sentence) => sentence.trim() !== '');       
+        // Remove empty sentences and trim whitespace
         return filteredSentences;
     }
     
@@ -195,7 +197,8 @@ function get_text(){
                 }
                 const p_tag = document.body.querySelectorAll("p")[i+k];
                 const p_text = p_tag.innerHTML;
-                const highlighted_txt = `<mark>${line_texts[j]}</mark>`;
+                // const highlighted_txt = `<mark>${line_texts[j]}</mark>`;
+                const highlighted_txt = `<readerai_highlight style="background-color: rgb(217, 195, 255); color: #000">${line_texts[j]}</readerai_highlight>`;
                 const highlighted_html = p_text.replace(line_texts[j], highlighted_txt);
                 p_tag.innerHTML = highlighted_html;
             }

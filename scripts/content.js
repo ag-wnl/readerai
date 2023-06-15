@@ -223,6 +223,29 @@ async function getDictionary(search_text) {
     }
 }
 
+//Text Translation
+function translate(){
+  
+    var sourceText = 'garson';
+    var sourceLang = 'fr';
+    var targetLang = 'en';
+    console.log(sourceText);
+
+    var tarnslate_url = "https://translate.google.so/translate_a/t?client=any_client_id_works&sl=auto&tl=en&q="+ encodeURI(sourceText) +"&tbb=1&ie=UTF-8&oe=UTF-8";
+    
+    var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="+ sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(sourceText);
+    
+    
+    $.getJSON(url, function(data) {
+        const res = (data[0][0][0]);
+        console.log(res);
+    });
+  
+}
+translate();
+
+
+
 function doButton(){
     const btn = document.createElement("div");
 

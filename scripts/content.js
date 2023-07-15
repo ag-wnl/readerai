@@ -71,9 +71,9 @@ function promptGen(box_text, audio_play) {
 
     const title_box = document.createElement("div");
     title_box.id = "readerai_textbox_title";
-    title_box.textContent = "Reader.ai";
+    title_box.textContent = "ReaderAI";
     title_box.style.fontFamily = "'Inter', sans-serif";
-    title_box.style.fontSize = "18px";
+    title_box.style.fontSize = "16px";
     title_box.style.marginBottom = "8px";
     title_box.style.fontWeight = "bolder";
 
@@ -162,8 +162,8 @@ function promptGen(box_text, audio_play) {
     });
 }
 
-const wiki_api = "https://en.wikipedia.org/api/rest_v1/page/html/"; //to get html
-const wiki_summary = "https://en.wikipedia.org/api/rest_v1/page/summary/"; //to get page summary
+const wiki_api = "https://en.wikipedia.org/api/rest_v1/page/html/"; 
+const wiki_summary = "https://en.wikipedia.org/api/rest_v1/page/summary/";
 
 // Making the summary box 
 async function SummaryBox (query_text) {
@@ -252,6 +252,8 @@ function doButton(){
     const div1 = document.createElement("img");
     div1.src = chrome.runtime.getURL("textsearch.svg")
     div1.style.paddingRight = "6px";
+    div1.style.height = "20px";
+    div1.style.width = "20px";
     div1.title = "ReaderAI Search";
     div1.style.borderRight = "0.5px solid grey";
     div1.addEventListener('mouseover', function() {
@@ -266,7 +268,9 @@ function doButton(){
 
     
     const div2 = document.createElement("img");
-    div2.src = chrome.runtime.getURL("translate.svg")
+    div2.src = chrome.runtime.getURL("translate.svg");
+    div2.style.height = "20px";
+    div2.style.width = "20px";
     div2.style.paddingRight = "2px";
     div2.addEventListener('mouseover', function() {
         div2.style.backgroundColor = "#F9E5FF";
@@ -284,8 +288,8 @@ function doButton(){
     btn.style.zIndex = "999999 !important";
     btn.style.border = "none";
     btn.style.borderRadius = "5px";
-    btn.style.width = "60px";
-    btn.style.height = "25px";
+    // btn.style.width = "60px";
+    // btn.style.height = "25px";
     btn.style.display = "flex";
     btn.style.flexDirection = "row";
     btn.style.gap = "5px";

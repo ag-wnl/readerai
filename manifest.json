@@ -1,5 +1,5 @@
 {
-    "name" : "Readerai",
+    "name" : "ReaderAI",
     "version" : "0.0.1",
     "description" : "Adding some smartness to the text you're reading.",
     "manifest_version": 3,
@@ -18,7 +18,7 @@
         }
       ],
     "icons" : {
-        "128" : "logo.png"
+        "128" : "readerai_logo.png"
         
     },
     "content_scripts": [

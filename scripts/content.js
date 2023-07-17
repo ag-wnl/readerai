@@ -44,6 +44,7 @@ function removeTextPrompt() {
     }
 }
 
+//Generation of the prompt box for queries
 function promptGen(box_text, audio_play) {
     const boxx = document.createElement("div");
     boxx.id = "readerai_text_prompt";
@@ -82,9 +83,7 @@ function promptGen(box_text, audio_play) {
     text_box.style.fontSize = "12px";
     text_box.textContent = box_text;
 
-    // boxx.textContent = box_text;
     const close_button = document.createElement("button");
-    
     close_button.textContent = "Close";
     close_button.style.backgroundColor = "#E5E4E2";
     close_button.style.color = "black";
@@ -389,9 +388,6 @@ function noteMarker(x_val, y_val) {
     const note_btn = document.createElement("img");
     note_btn.src = "https://i.imgur.com/AghQInS.png"
 
-    // const a_tag = document.createElement("a");
-    // a_tag.href = "#notes.html";
-
     note_btn.style.width = "25px";
     note_btn.style.height = "25px";
     note_btn.style.zIndex = "10000";
@@ -403,7 +399,7 @@ function noteMarker(x_val, y_val) {
     note_btn.style.top = y_val + "px";
 
     var z = create_UUID(); //the unique id
-    note_btn.id = "readerai_notes_btn" + z;
+    note_btn.id = "readerai_notes_btn" + z; //for easier identification of note marker in HTML corpus
     document.body.appendChild(note_btn);
 
 
@@ -411,14 +407,15 @@ function noteMarker(x_val, y_val) {
     const html_content = note_btn.outerHTML;
     console.log(current_url);
     console.log(html_content);
+    const storage_key = 'readerai_' + current_url
 
-    chrome.storage.sync.get(current_url, function(data) {
+    chrome.storage.sync.get(storage_key, function(data) {
 
-        const existing_marks = data[current_url] || [];  
+        const existing_marks = data[storage_key] || [];  
         existing_marks.push(html_content);
 
         const markers = { 
-            [current_url]: existing_marks 
+            [storage_key]: existing_marks 
         };
 
         chrome.storage.sync.set(markers, function() {
@@ -450,10 +447,11 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     }
 });
 
+// Adding Markers to the current Webpage
 const current_url = window.location.href.toString();
-
-chrome.storage.sync.get(current_url, function(data) { 
-    const mark_array = data[current_url] || [];
+const target_key = 'readerai_' + current_url
+chrome.storage.sync.get(target_key, function(data) { 
+    const mark_array = data[target_key] || [];
     
     mark_array.forEach(function (value) {
         console.log(value);
@@ -463,7 +461,6 @@ chrome.storage.sync.get(current_url, function(data) {
     })
     console.log("markers added");
 })
-
 
 function verifyMarker(buttonId) {
     return buttonId.startsWith("readerai_notes_btn");
@@ -486,12 +483,12 @@ document.addEventListener('click', function(event) {
             const id_value = data[ele_id];
             if(id_value){
                 chrome.storage.local.set({ Current_id : 0 }, function() {
-                    console.log("Current key set to 0, no id");
+                    console.log("Previous saved data exists for this marker.");
                 })
                 chrome.storage.local.set({ idShow : ele_id});
             }else{
                 chrome.storage.local.set({ Current_id : 1 }, function() {
-                    console.log("Current key set to 1, new entry");
+                    console.log("No Previous Data Exists for this marker");
                 })
                 chrome.storage.local.set({ idShow : ele_id }, function() {
                     console.log("id added to current key in storage");
@@ -524,7 +521,6 @@ document.addEventListener('contextmenu', function(event) {
         removeMenuItem.style.color = "white";
         removeMenuItem.style.boxShadow = "0 2px 4px darkslategray";
         removeMenuItem.style.fontFamily = '"Plus Jakarta Sans", sans-serif';
-        /* font-family: 'Plus Jakarta Sans', sans-serif; */
         removeMenuItem.style.fontSize = "12px";
         removeMenuItem.style.borderRadius = "4px";
         removeMenuItem.style.position = 'fixed';
@@ -539,16 +535,16 @@ document.addEventListener('contextmenu', function(event) {
             marker_selected.remove();
 
             const markDataRemove = element_id.toString();
-            chrome.storage.local.remove(markDataRemove); //saving storage, removing deleted marker data
-
-            chrome.storage.sync.get(current_url, function(data) { 
-                const existing_array = data[current_url] || [];
+            chrome.storage.local.remove(markDataRemove); // Remove Deleted Marker data from storage
+            const key_element = 'readerai_' + current_url;
+            chrome.storage.sync.get(key_element, function(data) { 
+                const existing_array = data[key_element] || [];
                 
                 const index_remove = existing_array.indexOf(mark_value);
 
                 if(index_remove != -1) {
                     existing_array.splice(index_remove, 1);
-                    chrome.storage.sync.set({ [current_url]: existing_array }, function() {
+                    chrome.storage.sync.set({ [key_element]: existing_array }, function() {
                         console.log("value removed from storage.");
                     });
                 }
@@ -557,7 +553,7 @@ document.addEventListener('contextmenu', function(event) {
         });
         document.body.appendChild(removeMenuItem);
 
-        //to remove context menu when clicked away:
+        // To remove context menu when clicked away:
         document.addEventListener('click', function(ev) {
             if(!removeMenuItem.contains(ev.target)){
                 removeMenuItem.remove();

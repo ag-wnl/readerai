@@ -161,31 +161,32 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
 });
 
 
+
+//getting id from the url
+const params = new URLSearchParams(window.location.search);
+const note_id = params.get('note');
+const exists = params.get('exists');
+console.log(note_id, exists)
+
 //Adding and fetching data from chrome storage:
 document.getElementById("save_btn").addEventListener('click', () => {
     const editorData = editor.getData().toString();
     console.log(editorData);
 
-    chrome.storage.local.get("idShow", function(data) {
-        const element_id = data.idShow.toString();
-        console.log(element_id);
-        chrome.storage.local.set({ [element_id]: editorData});
+    chrome.storage.local.set({ [note_id]: editorData});
+});
+
+
+if(exists === 'true'){
+    const curr_id = note_id
+    chrome.storage.local.get(curr_id, function(value) {
+        const editor_content = value[curr_id];
+        console.log(editor_content);
+        if(editor_content){
+            editor.setData( editor_content );
+        }
     });
-});
+}
 
-chrome.storage.local.get("Current_id", function(data) {
-    if(data.Current_id === 0){
-        console.log("no current id, so display previous text");
 
-        chrome.storage.local.get("idShow", function(data) {
-            const element_id = data.idShow;
-            chrome.storage.local.get(element_id, function(value) {
-                const editor_content = value[element_id];
-                console.log(editor_content);
-                if(editor_content){
-                    editor.setData( editor_content );
-                }
-            });
-        })
-    }
-});
+

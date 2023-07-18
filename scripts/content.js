@@ -407,9 +407,9 @@ function noteMarker(x_val, y_val) {
     const html_content = note_btn.outerHTML;
     console.log(current_url);
     console.log(html_content);
-    const storage_key = 'readerai_' + current_url
+    const storage_key = 'readerai_url_' + current_url
 
-    chrome.storage.sync.get(storage_key, function(data) {
+    chrome.storage.local.get(storage_key, function(data) {
 
         const existing_marks = data[storage_key] || [];  
         existing_marks.push(html_content);
@@ -418,7 +418,7 @@ function noteMarker(x_val, y_val) {
             [storage_key]: existing_marks 
         };
 
-        chrome.storage.sync.set(markers, function() {
+        chrome.storage.local.set(markers, function() {
             console.log("values appended to", markers);
         })
     }) 
@@ -449,8 +449,8 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 
 // Adding Markers to the current Webpage
 const current_url = window.location.href.toString();
-const target_key = 'readerai_' + current_url
-chrome.storage.sync.get(target_key, function(data) { 
+const target_key = 'readerai_url_' + current_url
+chrome.storage.local.get(target_key, function(data) { 
     const mark_array = data[target_key] || [];
     
     mark_array.forEach(function (value) {
@@ -476,28 +476,37 @@ document.addEventListener('click', function(event) {
     var click_element_id = click_element.id;
     if( verifyMarker(click_element_id) ) {
         
+        
         console.log(click_element_id);
         const ele_id = click_element_id.toString();
-        
+        var exists = '';
+
+        //A function which adds essential instructions to the url of notes page.
+        function openNotesPage() {
+            const pageURL = chrome.runtime.getURL('notes.html');
+            window.open(pageURL + '?note=' + ele_id + '&exists=' + exists, '_blank');
+        }
         chrome.storage.local.get(ele_id, function(data) { 
             const id_value = data[ele_id];
             if(id_value){
                 chrome.storage.local.set({ Current_id : 0 }, function() {
+                    exists = 'true';
+                    openNotesPage();
                     console.log("Previous saved data exists for this marker.");
                 })
                 chrome.storage.local.set({ idShow : ele_id});
             }else{
                 chrome.storage.local.set({ Current_id : 1 }, function() {
+                    exists = 'false';
+                    openNotesPage();
                     console.log("No Previous Data Exists for this marker");
                 })
                 chrome.storage.local.set({ idShow : ele_id }, function() {
                     console.log("id added to current key in storage");
                 });
             }
-        });
-
-        const pageURL = chrome.runtime.getURL('notes.html');
-        window.open(pageURL, '_blank');
+        }); 
+    
     }
 })
 
@@ -536,15 +545,15 @@ document.addEventListener('contextmenu', function(event) {
 
             const markDataRemove = element_id.toString();
             chrome.storage.local.remove(markDataRemove); // Remove Deleted Marker data from storage
-            const key_element = 'readerai_' + current_url;
-            chrome.storage.sync.get(key_element, function(data) { 
+            const key_element = 'readerai_url_' + current_url;
+            chrome.storage.local.get(key_element, function(data) { 
                 const existing_array = data[key_element] || [];
                 
                 const index_remove = existing_array.indexOf(mark_value);
 
                 if(index_remove != -1) {
                     existing_array.splice(index_remove, 1);
-                    chrome.storage.sync.set({ [key_element]: existing_array }, function() {
+                    chrome.storage.local.set({ [key_element]: existing_array }, function() {
                         console.log("value removed from storage.");
                     });
                 }

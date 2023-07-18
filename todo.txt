@@ -1,3 +1,3 @@
--> Better way to save and access files, without using temp storage. One failing case here would be working on 2 notes tab parallely and text info getting mixed up. Maintain note context.
+-> Better way to save and access files, without using temp storage. One failing case here would be working on 2 notes tab parallely and text info getting mixed up. Maintain note context. Done!!!!
 
--> Make notes home page like the file expllorer for notes.
+-> Make notes home page like the file explorer for notes. Doing.....

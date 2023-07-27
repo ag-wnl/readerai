@@ -7,7 +7,7 @@ const {
     host, hostname, href, origin, pathname, port, protocol, search
 } = window.location
 
-
+//To Display Estimated Time:
 function showTime() {
     if (bodycontent){
         const curr_url = window.location.href.toString();
@@ -19,12 +19,11 @@ function showTime() {
         const wordCount = [...words].length;
     
         const readingTime = Math.round(wordCount / 270).toString() + " minutes";
-        // chrome.storage.sync.set({read_time: readingTime});
         chrome.storage.sync.set({[time_url] : readingTime});
-        console.log(readingTime);
     } 
 }
 showTime();
+
 
 const font_link = document.createElement('link');
 font_link.rel = 'stylesheet';
@@ -384,6 +383,7 @@ var x = 0;
 var y = 0;
 var width = window.innerWidth;
 var height = window.innerHeight;
+
 function noteMarker(x_val, y_val) {
     const note_btn = document.createElement("img");
     note_btn.src = "https://i.imgur.com/AghQInS.png"
@@ -429,15 +429,15 @@ document.addEventListener('contextmenu', function(event) {
     // x = event.clientX - 2;  //This caused error as its relative to url bar
     // y = event.clientY - 5;
 
-    //zoom adjustment measures
+    //zoom adjustment measures  
     // const rect = event.target.getBoundingClientRect();
     // const zoomFactor = document.documentElement.clientWidth / window.innerWidth;
-    // const x = (event.clientX - rect.left) / zoomFactor;
-    // const y = (event.clientY - rect.top) / zoomFactor;
+    // x = (event.clientX - rect.left) / zoomFactor;
+    // y = (event.clientY - rect.top) / zoomFactor;
 
     x = event.pageX - 2; 
     y = event.pageY - 5;
-    console.log("Context menu opened at coordinates: (" + x + ", " + y + ")");
+    // console.log("Context menu opened at coordinates: (" + x + ", " + y + ")");
 })
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {

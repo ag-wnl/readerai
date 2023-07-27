@@ -13,18 +13,35 @@ document.addEventListener('DOMContentLoaded', function() {
         //Be aware that `tab` is an array of Tabs 
         curr_tab_url = tab[0].url.toString();
         const query_url = 'rai_time' + curr_tab_url;
-        console.log(query_url);
 
         chrome.storage.sync.get(query_url, function(val) {
             if(val[query_url]) {
                 const time_display = val[query_url].toString();
-                console.log(time_display);
                 const time_wrapper = document.getElementById("read_time_display");
                 time_wrapper.textContent = time_display;
             }
         })
+        
+        //Displaying number of markers in page:        
+        var numberOfMarkers  = 0;
+        const markers_query = 'readerai_url_' + curr_tab_url;
+        
+        chrome.storage.local.get(markers_query, function(data) {
+            
+            if(data.hasOwnProperty(markers_query)) {
+                const val_array = data[markers_query];
+                if(Array.isArray(val_array)) {
+                    numberOfMarkers = val_array.length;
+                    console.log(numberOfMarkers);
+                    const markNumbers = document.getElementById('marker_number');
+                    markNumbers.textContent = numberOfMarkers.toString();
+                }
+            }else {
+                const markNumbers = document.getElementById('marker_number');
+                markNumbers.textContent = '0';
+            }
+        })
     });
-
 
     const setting_highlight = document.getElementById('highlight_btn');
     const setting_text_assist = document.getElementById('assist_btn_popup');

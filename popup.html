@@ -24,6 +24,16 @@
             <div class="title-right">
                 
                 <div>
+                    <a>
+                        <img 
+                            class="notes_icon" 
+                            title="Notes Explorer"
+                            id="notes_button"
+                            src="/images/notes_popup.png">
+                    </a>
+                </div>
+
+                <div>
                     <a href="options.html">
                         <img 
                             class="settings_icon" 
@@ -73,10 +83,17 @@
                 <span class="time_displayed" id="read_time_display"></span>
             </div>
 
+            <div id="notes_in_page">
+                <span>Note Markers in This Page :</span>
+                <span class="time_displayed" id="marker_number"></span>
+            </div>
+
+            <button id="current_url_notes" class="button_2" 
+                role="button">Open Notes</button>
+
         </div>
 
-        <button id="notes_button" class="button_2" 
-        role="button">Find your Notes</button>
+       
 
     </div>
 </body>

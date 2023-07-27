@@ -7,6 +7,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const display_list = document.getElementById('key_list');
     
         keys.forEach(key => {
+
+            //To skip Keys(URLs) with no marker values(empty arrays):   
+            const values = data[key];
+            if (Array.isArray(values) && values.length === 0) {
+                // Skip the key with an empty array value
+                return;
+            }
+
             const item = document.createElement('li');
             //Adding the Page URL it corresponds to in the list item's ID attribute.
             const format_display = key.replace('readerai_url_', '');
@@ -95,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     //Searchbar Functionality and search algorithm
-    
+
     const search_list = document.getElementById('key_list');
     const searchbar = document.getElementById('searchbar');
     searchbar.addEventListener('input', function() {

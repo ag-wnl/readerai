@@ -4,12 +4,40 @@
 .body-tag {
     font-family: Plus Jakarta Sans,sans-serif;
     font-weight: 900;
-    padding: 1rem;
+    padding: 5px;
+}
+
+.header-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 2rem;
+}
+
+.search-box {
+    margin-left: 5rem;
+    align-items: center;
+    padding: 5px;
+    border: 1px solid rgb(219, 189, 247);
+    border-radius: 10px;
+    width: 20rem;
+}
+
+.sub-headings {
+    padding-left: 2rem;
 }
 
 .display-section {
+    margin-top: 1.5rem;
     padding: 1rem;
     display: flex;
     flex-direction: row;
-    gap: 1rem;
+    gap: 6rem;
+}
+
+.subkeys-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
 }

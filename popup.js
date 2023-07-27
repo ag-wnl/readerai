@@ -100,5 +100,12 @@ document.addEventListener('DOMContentLoaded', function() {
             chrome.runtime.sendMessage({action : 'dark-mode-undo'});
         }
     })
+
+    const notes_page_btn = document.getElementById('notes_button');
+    notes_page_btn.addEventListener('click', function() {
+        window.open(chrome.runtime.getURL("notes_menu.html"));
+    })
+
+
 });
 

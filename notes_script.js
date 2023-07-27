@@ -54,7 +54,7 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
         ]
     },
     // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
-    placeholder: 'Welcome to CKEditor 5!',
+    placeholder: 'Welcome to ReaderAI Notes!',
     // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
     fontFamily: {
         options: [
@@ -161,7 +161,6 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
 });
 
 
-
 //getting id from the url
 const params = new URLSearchParams(window.location.search);
 const note_id = params.get('note');
@@ -172,7 +171,10 @@ console.log(note_id, exists)
 document.getElementById("save_btn").addEventListener('click', () => {
     const editorData = editor.getData().toString();
     console.log(editorData);
-
+    
+    //Saving Timestamp of Data stored along with editorData:
+    const timestamp = new Date().getTime();
+    editorData.timestamp = timestamp;
     chrome.storage.local.set({ [note_id]: editorData});
 });
 

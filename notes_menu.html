@@ -8,14 +8,31 @@
     <script src="noteFetcher.js"></script>
 </head>
 <body class="body-tag">
-    <h1>
-        ReaderAI Notes
-    </h1>
-    <h3>Your saved Notes are listed below:</h3>
+    <div class="header-title">
+        <a href="https://www.readerai.org" target="_blank">
+            <img style="cursor: pointer; margin-top: 2px;"
+                width="25px"
+                height="25px"
+                src="images/readerai_logo.svg">
+        </a>
+        <h1>
+            ReaderAI Notes
+        </h1>
+        
+        <input type="text" id="searchbar" class="search-box" placeholder=" Search in Notes...">
+
+    </div>
+
+    <div class="sub-headings">
+        <h2>Your saved Notes are listed below:</h2>
+        <span>Click on a displayed URL to discover all the saved notes for it.</span>
+    </div>
+
     
     <div class="display-section">
         <ul id="key_list" style="cursor: pointer;"></ul>
-        <ul id="subkeys"></ul>
+        <ul id="subkeys" class="subkeys-list"></ul>
+        <ul id="recent_notes" class="recent-notes"></ul>
     </div>
 </body>
 </html>

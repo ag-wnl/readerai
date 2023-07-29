@@ -178,6 +178,10 @@ document.getElementById("save_btn").addEventListener('click', () => {
     chrome.storage.local.set({ [note_id]: editorData});
 });
 
+const notes_title = document.getElementById('readerai_notes');
+    notes_title.addEventListener('click', function() {
+        window.open(chrome.runtime.getURL("notes_menu.html"));
+})
 
 if(exists === 'true'){
     const curr_id = note_id

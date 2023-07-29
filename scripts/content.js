@@ -221,73 +221,78 @@ async function getDictionary(search_text) {
     }
 }
 
-//Text Translation
-function translate(){
+//Text Translation Functionality:
+function translate(source){
+    const sourceText = source.toString();
   
-    var sourceText = 'garson';
-    var sourceLang = 'fr';
-    var targetLang = 'en';
-    console.log(sourceText);
+    // var sourceText = 'garson';
+    // var sourceLang = 'fr';
+    // var targetLang = 'en';
+    // console.log(sourceText);
 
-    var tarnslate_url = "https://translate.google.so/translate_a/t?client=any_client_id_works&sl=auto&tl=en&q="+ encodeURI(sourceText) +"&tbb=1&ie=UTF-8&oe=UTF-8";
+    var url = "https://translate.google.so/translate_a/t?client=any_client_id_works&sl=auto&tl=en&q="+ encodeURI(sourceText) +"&tbb=1&ie=UTF-8&oe=UTF-8";
     
-    var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="+ sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(sourceText);
-    
+    // var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="+ sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(sourceText);
     
     $.getJSON(url, function(data) {
-        const res = (data[0][0][0]);
-        console.log(res);
-    });
-  
+        const res = (data[0][0]);
+        promptGen(res, null);
+        // console.log(res);
+    }); 
 }
-translate();
 
 
 
 function doButton(){
     const btn = document.createElement("div");
 
+    //We Containerize the images inside in unique div so that page Css doesnt affect.
+    const divContainer1 = document.createElement('div');
+    divContainer1.style.paddingRight = "6px";
+    divContainer1.style.paddingLeft = "2px";
+    divContainer1.style.borderRight = "0.5px solid grey";
+
     const div1 = document.createElement("img");
     div1.src = chrome.runtime.getURL("textsearch.svg")
-    div1.style.paddingRight = "6px";
     div1.style.height = "20px";
     div1.style.width = "20px";
     div1.title = "ReaderAI Search";
-    div1.style.borderRight = "0.5px solid grey";
     div1.addEventListener('mouseover', function() {
-        div1.style.backgroundColor = "#F9E5FF";
-    })
-    div1.addEventListener('mouseover', function() {
-        div1.style.backgroundColor = "#F9E5FF";
+        divContainer1.style.backgroundColor = "#F9E5FF";
+        divContainer1.style.transition = "background-color 0.4s";
     })
     div1.addEventListener('mouseout', function() {
-        div1.style.backgroundColor = "white";
+        divContainer1.style.backgroundColor = "white";
     })
-
+    divContainer1.appendChild(div1);
     
+
+    const divContainer2 = document.createElement('div');
+    divContainer2.style.paddingRight = "2px";
+    divContainer2.style.paddingLeft = "4px";
+
     const div2 = document.createElement("img");
     div2.src = chrome.runtime.getURL("translate.svg");
     div2.style.height = "20px";
     div2.style.width = "20px";
-    div2.style.paddingRight = "2px";
     div2.addEventListener('mouseover', function() {
-        div2.style.backgroundColor = "#F9E5FF";
+        divContainer2.style.backgroundColor = "#F9E5FF";
+        divContainer2.style.transition = "background-color 0.4s";
     })
     div2.addEventListener('mouseout', function() {
-        div2.style.backgroundColor = "white";
+        divContainer2.style.backgroundColor = "white";
     })
+    divContainer2.appendChild(div2);
 
     btn.id = "readerai_text_assist_button";
     btn.textContent = "";
     btn.style.backgroundColor = "white";
-    btn.style.padding = "2px";
+    btn.style.padding = "4px";
     btn.style.color = "black";
     btn.style.position = "absolute";
-    btn.style.zIndex = "999999 !important";
+    btn.style.zIndex = "999999";
     btn.style.border = "none";
     btn.style.borderRadius = "5px";
-    // btn.style.width = "60px";
-    // btn.style.height = "25px";
     btn.style.display = "flex";
     btn.style.flexDirection = "row";
     btn.style.gap = "5px";
@@ -297,8 +302,8 @@ function doButton(){
 
 
     document.body.appendChild(btn);
-    btn.appendChild(div1);
-    btn.appendChild(div2);
+    btn.appendChild(divContainer1);
+    btn.appendChild(divContainer2);
 
     document.addEventListener('mouseup', function() {
         
@@ -337,7 +342,19 @@ function doButton(){
             removeTextPrompt();
         }
     });
-    console.log("text assist button added to page.")
+
+    div2.addEventListener('click', function() {
+        if(prompt_text === ""){
+            return;
+        }
+        const prompt_exists = document.getElementById("readerai_text_prompt");
+        if(!prompt_exists){
+            translate(prompt_text);
+        }else{
+            removeTextPrompt();
+        }
+
+    })
 }
 
 // Checking with settings page if textAsist Enabled or not

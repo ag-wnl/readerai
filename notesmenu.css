@@ -15,11 +15,12 @@
     margin-bottom: 2rem;
 }
 
+
 .search-box {
-    margin-left: 15rem;
-    padding: 5px;
+    margin-left: 8rem;
+    padding: 7px;   
     border: 1px solid rgb(219, 189, 247);
-    border-radius: 10px;
+    border-radius: 16px;
     width: 20rem;
     display: flex;
     justify-content: center;

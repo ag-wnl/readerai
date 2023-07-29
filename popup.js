@@ -3,6 +3,11 @@ console.log("Pop-up scripts are working")
 let isToggled = false;
 let isHighlightEnabled = false;
 
+
+const click_sound_url = chrome.runtime.getURL("click_sound.mp3");
+const click_sound = new Audio(click_sound_url);
+// click_sound.play();
+
 document.addEventListener('DOMContentLoaded', function() {
     
 
@@ -62,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //defining button click action triggers
     var executeButton = document.getElementById('highlight_btn');
     executeButton.addEventListener('click', function() {
+        // click_sound.play();
         const initialText = "Highlight!";
 
         if (executeButton.textContent === "Highlight!") {

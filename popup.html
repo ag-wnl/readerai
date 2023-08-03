@@ -11,8 +11,7 @@
     <div class="box1">
 
         <div class="title_box">
-            <!-- <img class="head_logo" style="cursor: pointer;" src="/logo.png">
-            <h1 class="main_text">Reader.ai</h1> -->
+
             <a href="https://www.readerai.org" target="_blank" class="title-header">
                 <img style="cursor: pointer; margin-top: 2px;"
                 width="25px"
@@ -63,33 +62,46 @@
         <div class="text_rows">
 
             <div class="utility-row">
-                <span class="utility-text">Auto-Highlight Text</span>
+                <img
+                style="margin-right: 8px;"
+                width="16px" height="16px" 
+                src="images/highlight.png">
+                <span style="margin-right: 25px;">Auto-Highlight Text</span>
                 <button id="highlight_btn" 
                 class="button_2" 
                 role="button"
-                >Highlight!</button>        
+                >Highlight!</button>     
             </div>
-        
+
+            <div class="bottom-border"></div>
+            
             <div class="utility-row">
-                <span style="margin-right: 22px;">Switch Theme</span>
+                <img src="images/toggle.png" 
+                style="margin-right: 8px;"
+                width="20px" height="20px" >
+                <span style="margin-right: 52px;">Switch Theme</span>
                 <button 
                 id="dark_mode_toggle"
                 class="button_2"
                 role="button">Toggle theme⛅</button> 
             </div>
 
+            <div class="bottom-border"></div>
+
             <div id="read_time">
-                <span>Estimated Reading Time :</span>
+                <span style="margin-right: 27px;">Estimated Reading Time :</span>
                 <span class="time_displayed" id="read_time_display"></span>
             </div>
 
-            <div id="notes_in_page">
-                <span>Note Markers in This Page :</span>
+            <div id="notes_in_page" class="note_here">
+                <span style="margin-right: 16px;">Note Markers in This Page :</span>
                 <span class="time_displayed" id="marker_number"></span>
             </div>
 
-            <button id="current_url_notes" class="button_2" 
-                role="button">Open Notes</button>
+                <button id="current_url_notes" class="open-note" 
+                role="button">
+                <img src="images/open_note.svg" width="20px" height="20px">
+                Saved content for this Page</button>
 
         </div>
 

@@ -3,12 +3,12 @@
 
 
 .body_tag {
-    width: 300px;
-    height: 280px;
+    width: 320px;
+    height: 325px;
     background-color: white;
     margin: 0px;
     border-radius: 2px;
-    border: 3px solid rgb(224, 198, 255);
+    border: 1px solid rgb(224, 198, 255);  
     /* box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset; */
 }
 
@@ -41,6 +41,7 @@
   flex-direction: row;
   align-items: center;
 }
+
 
 .settings_icon {
   cursor: pointer;
@@ -79,40 +80,22 @@
     margin-left: 5px;
     border-bottom: 1px solid rgb(221, 202, 255);
     width: 95%;
-    /* box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset; */
 }
 
 .text_rows {
-    /* font-family: "JetBrains Mono",monospace; */
-    color: #36395A;
-    font-weight: bold;
+    /* color: #36395A; */
+    font-weight: 400;
     display: flex;
-    font-size: 12px;
+    font-size: 13px;
     flex-direction: column;
     background-color: #ffffff;
     margin-top: 5px;
-    margin-left: 5px;
-    margin-right: 5px;
-    justify-content: space-evenly;
-    align-items: center;
+    margin-left: -50px;
+    justify-content: flex-start;
+    margin-left: 20px;
     gap: 10px;
     padding-bottom: 5px;
 }
-
-
-
-.main_text {
-    /* font-family: "JetBrains Mono",monospace; */
-    font-family: "Lato", Arial, sans-serif;
-    letter-spacing: 0.7px;
-    font-size: 18px;
-    font-weight: 600;
-    padding-top: 3px;
-    width: auto;
-    color:#36395A;
-
-}
-
 
 .button_1 {
   align-items: center;
@@ -163,7 +146,7 @@
 
 .button_2 {
   align-items: center;
-  margin-top: 14px;
+  margin-top: 1px;
   appearance: none;
   background-color: #FCFCFD;
   border-radius: 4px;
@@ -209,9 +192,45 @@
   transform: translateY(2px);
 }
 
+.bottom-border {
+  width: calc(100% - 20px);
+  border-bottom-width: 100px;
+  border-bottom: 1px solid #e7e2ec;
+  margin-left: 0px;
+}
+
 .utility-row {
-  padding-bottom: 14px;
-  border-bottom: 2px solid rgb(241, 232, 255);
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 12px;
+}
+
+.open-note {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 98%;
+  background-color: white;
+  border: none;
+  margin-left: 2px;
+  margin-bottom: 2px;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+  transition: 0.5s;
+  font-weight: 700;
+    font-size: 13px;
+    line-height: 130%;
+    color: rgb(47, 31, 59);
+}
+
+.open-note:hover {
+  background-color: rgb(243, 243, 243);
+  transition: 0.5s;
 }
 
 .time_displayed {
@@ -222,3 +241,5 @@
   padding-right: 5px;
   border-radius: 5px;
 }
+
+

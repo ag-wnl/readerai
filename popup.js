@@ -11,6 +11,18 @@ const click_sound = new Audio(click_sound_url);
 document.addEventListener('DOMContentLoaded', function() {
     
 
+    //Login Functionality:
+    const login_btn = document.getElementById('login_btn');
+    login_btn.addEventListener('click', function() {
+        chrome.runtime.sendMessage({message: 'login'}, function(response) {
+            if(response === 'success'){
+                login_btn.title = 'Click to Sign Out'
+            }
+        });
+    })
+
+
+
     //Estimated Time Display
     var curr_tab_url = '';
     chrome.tabs.query({active:true,currentWindow:true},function(tab){

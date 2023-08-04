@@ -3,11 +3,11 @@
     "version" : "0.0.1",
     "description" : "Adding some smartness to the text you're reading.",
     "manifest_version": 3,
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3k3KnFJ3ATMDNDH6wUNWxKXz1hD6iJTRSx7xKNr+YnHECXrj+HIDSbvl4mjeiABq2KTXwBJ86H9FnGlRFFnfp1IxRgwx60NHUIMXI3HjXCBxNsGtGo96lxwJeXmf7hWHTdZJQE0MlEilDDJK4YVPlHOgIX3TC6csPD9WKzamGN9Hnkc74e/QRnZ876QKjYt7Cowm08a3joypj/uieT+qKZPdRFQD/cUXH9YpW5Vu6x1a8HxrnbXUs8yMd3QR5Deq7Y0jD9eVcf/pG3Jldl1emL4sYtkoMLVmvzdfYhP65VjSATJiG7WM0oRyHF8r17jA+pnU9ELyxh7eTNjyrNM47QIDAQAB",
     "background" : {    
-        "service_worker" : "background.js",
-        "type": "module"
+        "service_worker" : "background.js"
     },
-    "permissions" : ["storage","unlimitedStorage","activeTab","tabs","scripting","contextMenus","webRequest"], 
+    "permissions" : ["storage","unlimitedStorage","activeTab","tabs","scripting","contextMenus","webRequest", "identity"], 
     "action" : {
         "default_popup": "popup.html"
     },
@@ -24,7 +24,7 @@
     "content_scripts": [
         {
             "matches" : ["<all_urls>"],
-            "js" : ["jq.js","./scripts/text_selection.js", "./scripts/un_highlight.js", "./scripts/darkmode.js", "scripts/content.js", "./scripts/plot_compute.js"]
+            "js" : ["jq.js", "jsrsasign-all-min.js","./scripts/text_selection.js", "./scripts/un_highlight.js", "./scripts/darkmode.js", "scripts/content.js", "./scripts/plot_compute.js"]
         }
     ]
 }

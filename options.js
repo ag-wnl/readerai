@@ -2,6 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', function() { 
 
+
     const text_assist = document.getElementById("textAssist_toggle");
 
 

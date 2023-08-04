@@ -204,5 +204,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     }       
         })
     }
+
+
+    const title_btn = document.getElementById('home_page');
+    title_btn.addEventListener('click', function() {
+        const pageURL = chrome.runtime.getURL('notes_menu.html');
+        window.open(pageURL);
+    })
 });
 

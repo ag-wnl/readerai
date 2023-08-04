@@ -9,6 +9,11 @@
     margin-right: 3rem;
 }
 
+.login-btn:hover {
+  transition: 0.5s;
+  background-color: rgb(233, 189, 231);
+}
+
 .switch {
     position: relative;
     display: inline-block;

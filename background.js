@@ -36,6 +36,24 @@ function create_oauth2_url() {
     return url;
 }
 
+//Implement all this in popup.js
+function signOutUser() {
+    // Revoke the user's access token
+    chrome.identity.getAuthToken({ 'interactive': true }, function (token) {
+      if (chrome.runtime.lastError) {
+        console.error('Error getting user token:', chrome.runtime.lastError);
+      } else {
+        chrome.identity.removeCachedAuthToken({ token: token }, function () {
+          // Clear the user's OAuth 2.0 credentials
+          chrome.identity.clearAllCachedAuthTokens(function () {
+            console.log('User signed out successfully!');
+            // Perform any other cleanup or actions you need after sign-out here
+          });
+        });
+      }
+    });
+  }
+
 
 
 //receiving messages from popup.js and sending messages to trigger other scripts.
@@ -80,8 +98,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 const user_info = KJUR.jws.JWS.readSafeJSONString(b64utoutf8(id_token.split(".")[1]));
 
                 if((user_info.iss === 'https://accounts.google.com' || user_signed_in.iss === 'accounts.google.com') &&  user_info.aud === CLIENT_ID) {
+                    
                     user_signed_in = true;
                     sendResponse('success');
+                    console.log('done!!')
+                    chrome.storage.local.set({ SignedIn : 1 });
                 }else{
                     console.log('Could not Authenticate.');
                 }
@@ -90,9 +111,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             return true;
         }
     }else if (request.message === 'logout') {
+
+        signOutUser();
+        chrome.storage.local.set({ SignedIn : 0 });
         user_signed_in = false;
         return true;
-        sendResponse('success');
+        
     } 
 });
 

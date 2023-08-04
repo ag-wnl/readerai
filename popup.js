@@ -7,6 +7,18 @@ let isHighlightEnabled = false;
 const click_sound_url = chrome.runtime.getURL("click_sound.mp3");
 const click_sound = new Audio(click_sound_url);
 // click_sound.play();
+const signOut_btn = document.createElement('img');
+signOut_btn.src = '/images/signed_in.png';
+signOut_btn.style.height = '19px';
+signOut_btn.style.width = '19px';
+signOut_btn.style.cursor = 'pointer';
+signOut_btn.style.marginTop = '4px';
+signOut_btn.title = 'Click to Sign Out'
+
+signOut_btn.addEventListener('click', function() {
+    chrome.runtime.sendMessage({message: 'logout'}, function(response) {
+    });
+})
 
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -16,10 +28,20 @@ document.addEventListener('DOMContentLoaded', function() {
     login_btn.addEventListener('click', function() {
         chrome.runtime.sendMessage({message: 'login'}, function(response) {
             if(response === 'success'){
-                login_btn.title = 'Click to Sign Out'
+                login_btn.title = 'Click to Sign Out';
             }
         });
     })
+
+
+    chrome.storage.local.get('SignedIn', function(data) {
+        if (data.SignedIn === 1) {
+            login_btn.replaceWith(signOut_btn);
+            // login_btn.title = 'Click to Sign Out';
+        } else if (data.SignedIn === 0) {
+            signOut_btn.replaceWith(login_btn);
+        }
+    });
 
 
 

@@ -130,5 +130,17 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
 
+    const curr_page_notes = document.getElementById('current_url_notes');
+    curr_page_notes.addEventListener('click', function() {
+
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            const currentUrl = tabs[0].url;
+            const pageURL = chrome.runtime.getURL('notes_menu.html');
+            window.open(pageURL + '?url=' + currentUrl, '_blank');    
+        });
+        
+    })
+
+
 });
 

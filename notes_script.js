@@ -165,7 +165,6 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
 const params = new URLSearchParams(window.location.search);
 const note_id = params.get('note');
 const exists = params.get('exists');
-console.log(note_id, exists)
 
 //Adding and fetching data from chrome storage:
 document.getElementById("save_btn").addEventListener('click', () => {

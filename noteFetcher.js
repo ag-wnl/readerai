@@ -1,7 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', function() { 
 
-
     //Current URL Notes Viewer
     const params = new URLSearchParams(window.location.search);
     const note_url = params.get('url');
@@ -11,10 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const display_list = document.getElementById('key_list');
 
             const values = data[search_url];
-            if (Array.isArray(values) && values.length === 0) {
-                // Skip the key with an empty array value
-                return;
-            }
+            // if (Array.isArray(values) && values.length === 0) {
+                
+                
+            // }
 
             const item = document.createElement('li');
             //Adding the Page URL it corresponds to in the list item's ID attribute.
@@ -30,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             display_list.appendChild(item);
 
             const subkey_list = document.getElementById('subkeys');
-            for(let subkey_item of subkey_target_list) {
+            for(let subkey_item of values) {
                 const sub_item = document.createElement('li');
                 const regex = /id="([^"]+)"/;
                 const match = subkey_item.match(regex);

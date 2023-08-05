@@ -17,7 +17,7 @@
     },
     "web_accessible_resources": [
         {
-          "resources": [ "notes.html", "textsearch.svg", "translate.svg"],
+          "resources": [ "notes.html", "textsearch.svg", "translate.svg", "dark_mode.css", "light_mode.css"],
           "matches": [ "<all_urls>" ]
         }
       ],

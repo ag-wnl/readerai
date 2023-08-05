@@ -72,14 +72,30 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
     else if (request.action === 'dark-mode'){
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            chrome.tabs.sendMessage(tabs[0].id, {dothis: 'toggle_drk_mode'});
+            chrome.scripting.insertCSS({
+                target: { tabId: tabs[0].id},
+                files: ["dark_mode.css"]
+            });
         });
+        // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        //     chrome.tabs.sendMessage(tabs[0].id, {dothis: 'toggle_drk_mode'});
+        // });
+
+        // chrome.tabs.insertCSS(null, {file: 'dark_mode.css'});
         
     }
     else if (request.action === 'dark-mode-undo'){
+        // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        //     chrome.tabs.sendMessage(tabs[0].id, {dothis: 'toggle_drk_mode-off'});
+        // });
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            chrome.tabs.sendMessage(tabs[0].id, {dothis: 'toggle_drk_mode-off'});
+            chrome.tabs.sendMessage(tabs[0].id, {run: 'highlight_text'});
+            chrome.scripting.removeCSS({
+                target: { tabId: tabs[0].id },
+                files: ["dark_mode.css"]
+            });
         });
+        // chrome.tabs.insertCSS(null, {file: 'light_mode.css'});
 
     }
 });

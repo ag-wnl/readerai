@@ -15,10 +15,10 @@ signOut_btn.style.cursor = 'pointer';
 signOut_btn.style.marginTop = '4px';
 signOut_btn.title = 'Click to Sign Out'
 
-signOut_btn.addEventListener('click', function() {
-    chrome.runtime.sendMessage({message: 'logout'}, function(response) {
-    });
-})
+const REDIRECT_URI = 'https://hodnlalamlhhnadbmhgkddeoaookbmbg.chromiumapp.org';
+// encodeURIComponent('https://hodnlalamlhhnadbmhgkddeoaookbmbg.chromiumapp.org');
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -26,14 +26,27 @@ document.addEventListener('DOMContentLoaded', function() {
     //Login Functionality:
     const login_btn = document.getElementById('login_btn');
     login_btn.addEventListener('click', function() {
-        chrome.runtime.sendMessage({message: 'login'}, function(response) {
-            if(response === 'success'){
-                login_btn.title = 'Click to Sign Out';
-            }
+        // signIn();
+        chrome.identity.getAuthToken({interactive: true}, function(token) {
+            const user_token = token;
+            console.log(user_token);
+            chrome.storage.local.set({readerai_token : user_token}, () => {
+                chrome.storage.local.set({SignedIn : 1});
+                chrome.runtime.reload(); //reloads popup 
+            });
         });
     })
 
-
+    //When user Clicks to Sign Out:
+    signOut_btn.addEventListener('click', function() {
+        chrome.storage.local.remove('readerai_token', () => {
+            console.log('User Logges Out.')
+            chrome.storage.local.set({SignedIn : 0});
+            chrome.runtime.reload(); //reloads popup
+        })
+    })
+   
+   
     chrome.storage.local.get('SignedIn', function(data) {
         if (data.SignedIn === 1) {
             login_btn.replaceWith(signOut_btn);

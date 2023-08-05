@@ -1,3 +1,7 @@
 -> Auto Catagorization of Notes that user take.
 -> Let users save Note Name and access it accordingly.
 -> Improved Note management technique implement DL algos.
+
+
+->Currently implemented oauth to use google drive api.
+Use Drive to backup notes Data.

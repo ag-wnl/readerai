@@ -8,6 +8,10 @@
         "service_worker" : "background.js"
     },
     "permissions" : ["storage","unlimitedStorage","activeTab","tabs","scripting","contextMenus","webRequest", "identity", "identity.email"], 
+    "oauth2": {
+        "client_id": "908233109-3pqg55eergo7js5mta9k6n287eqhkjsh.apps.googleusercontent.com",
+        "scopes": ["profile", "email", "https://www.googleapis.com/auth/drive"]
+      },
     "action" : {
         "default_popup": "popup.html"
     },

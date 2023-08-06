@@ -7,53 +7,8 @@ self.window = self;
 importScripts('./jsrsasign-all-min.js')
 importScripts('./scripts/text_selection.js')
 importScripts('./scripts/un_highlight.js')
-importScripts('./scripts/darkmode.js')
 importScripts('./scripts/plot_compute.js')
 importScripts('./scripts/plot_compute.js')
-
-
-//User Login Handling Block:
-// let user_signed_in = false;
-
-// function is_user_signed_in() {
-//     return user_signed_in;  
-// }
-
-// const CLIENT_ID = encodeURIComponent('908233109-0gi4ugo0f3990abdmqgiengfur23tr3r.apps.googleusercontent.com');
-// const RESPONSE_TYPE = encodeURIComponent('id_token');
-// const REDIRECT_URI = encodeURIComponent('https://hodnlalamlhhnadbmhgkddeoaookbmbg.chromiumapp.org');
-// const STATE = encodeURIComponent('jfkls3n');
-// const SCOPE = encodeURIComponent('openid');
-// const PROMPT = encodeURIComponent('consent');
-
-
-// function create_oauth2_url() {
-//     let nonce = encodeURIComponent(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2,15));
-
-//     let url = 
-//     `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&redirect_uri=${REDIRECT_URI}&state=${STATE}&scope=${SCOPE}&prompt=${PROMPT}&nonce=${nonce}`;
-    
-//     return url;
-// }
-
-//Implement all this in popup.js
-function signOutUser() {
-    // Revoke the user's access token
-    chrome.identity.getAuthToken({ 'interactive': true }, function (token) {
-      if (chrome.runtime.lastError) {
-        console.error('Error getting user token:', chrome.runtime.lastError);
-      } else {
-        chrome.identity.removeCachedAuthToken({ token: token }, function () {
-          // Clear the user's OAuth 2.0 credentials
-          chrome.identity.clearAllCachedAuthTokens(function () {
-            console.log('User signed out successfully!');
-            // Perform any other cleanup or actions you need after sign-out here
-          });
-        });
-      }
-    });
-  }
-
 
 
 //receiving messages from popup.js and sending messages to trigger other scripts.
@@ -77,26 +32,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 files: ["dark_mode.css"]
             });
         });
-        // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        //     chrome.tabs.sendMessage(tabs[0].id, {dothis: 'toggle_drk_mode'});
-        // });
-
-        // chrome.tabs.insertCSS(null, {file: 'dark_mode.css'});
         
     }
     else if (request.action === 'dark-mode-undo'){
-        // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        //     chrome.tabs.sendMessage(tabs[0].id, {dothis: 'toggle_drk_mode-off'});
-        // });
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            chrome.tabs.sendMessage(tabs[0].id, {run: 'highlight_text'});
             chrome.scripting.removeCSS({
                 target: { tabId: tabs[0].id },
                 files: ["dark_mode.css"]
             });
         });
-        // chrome.tabs.insertCSS(null, {file: 'light_mode.css'});
-
     }
 });
 

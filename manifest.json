@@ -28,7 +28,7 @@
     "content_scripts": [
         {
             "matches" : ["<all_urls>"],
-            "js" : ["jq.js","jsrsasign-all-min.js","./scripts/text_selection.js", "./scripts/un_highlight.js", "./scripts/darkmode.js", "scripts/content.js", "./scripts/plot_compute.js"]
+            "js" : ["jq.js","jsrsasign-all-min.js","./scripts/text_selection.js", "./scripts/un_highlight.js", "scripts/content.js", "./scripts/plot_compute.js"]
         }
     ]
 }

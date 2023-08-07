@@ -222,25 +222,12 @@ async function getDictionary(search_text) {
 }
 
 //Text Translation Functionality:
-function translate(source){
-    const sourceText = source.toString();
-  
-    // var sourceText = 'garson';
-    // var sourceLang = 'fr';
-    // var targetLang = 'en';
-    // console.log(sourceText);
-
-    var url = "https://translate.google.so/translate_a/t?client=any_client_id_works&sl=auto&tl=en&q="+ encodeURI(sourceText) +"&tbb=1&ie=UTF-8&oe=UTF-8";
-    
-    // var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="+ sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(sourceText);
-    
-    $.getJSON(url, function(data) {
-        const res = (data[0][0]);
-        promptGen(res, null);
-        // console.log(res);
-    }); 
-}
-
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) { 
+    if (request.translated_text) {
+       const translated_result = request.translated_text;
+       promptGen(translated_result, null);
+    }
+});
 
 
 function doButton(){
@@ -349,7 +336,8 @@ function doButton(){
         }
         const prompt_exists = document.getElementById("readerai_text_prompt");
         if(!prompt_exists){
-            translate(prompt_text);
+            chrome.runtime.sendMessage({translate: prompt_text});
+            // translate(prompt_text);
         }else{
             removeTextPrompt();
         }

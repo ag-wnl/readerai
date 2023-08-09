@@ -69,7 +69,8 @@
 .recent-notes {
     color: white;
     background-color: rgb(107, 138, 242);
-    background-image: linear-gradient(rgb(216, 186, 246), rgb(116, 141, 255));
+    background-image: linear-gradient(rgb(216, 186, 246), rgb(100, 127, 249));
+    transition: background-image 0.5s ease;
     height: 120px;
     width: 170px;
     border-radius: 12px;
@@ -79,6 +80,11 @@
     font-size: 17px;
     gap: 5px;
     cursor: pointer;
+    transition: background-image .15s;
+}
+
+.recent-notes:hover {
+    background-image: linear-gradient(rgb(216, 186, 246), rgb(65, 98, 245));
 }
 
 .recent-box {

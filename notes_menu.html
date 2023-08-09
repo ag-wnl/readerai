@@ -27,13 +27,19 @@
     <div class="sub-headings">
         <h2>Your saved Notes are listed below:</h2>
         <span>Click on a displayed URL to discover all the saved notes for it.</span>
+        <button class="back" id="back_btn"><img src="images/back.png" width="25px" height="25px"/></button>
     </div>
 
     
     <div class="display-section">
-        <ul id="key_list" style="cursor: pointer;"></ul>
+        
+        <div id="recent_notes" class="recent-notes">Recent Notes
+            <img src="images/open_note.svg" width="20px" height="20px">
+        </div>
+        <ul id="key_list" style="cursor: pointer;" class="key-list"></ul>
         <ul id="subkeys" class="subkeys-list"></ul>
-        <ul id="recent_notes" class="recent-notes"></ul>
+        <ul id="recent" class="recent-list"></ul>
+        
     </div>
 </body>
 </html>

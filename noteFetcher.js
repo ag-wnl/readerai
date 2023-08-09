@@ -1,6 +1,85 @@
 
 document.addEventListener('DOMContentLoaded', function() { 
 
+    //recent Notes:
+    const recent_list = document.getElementById('recent');
+    const recents = document.getElementById('recent_notes');
+    recents.addEventListener('click', function() {
+        const storing_key = 'readerai_recent_notes';
+        chrome.storage.local.get(storing_key, function(data) { 
+            
+                const recent_target_list = data[storing_key];    
+                for(let subkey_item of recent_target_list) {
+                    if(subkey_item === null) {
+                        return;
+                    }else{
+                        const sub_item = document.createElement('li');
+                        const id = subkey_item;
+                        sub_item.id = id;
+                        chrome.storage.local.get(id, function(value) {
+                            const editor_content = value[id];
+
+                            if(editor_content !== undefined) {
+                                console.log(editor_content);
+                                const preview_text = editor_content.replace(/<[^>]*>/g, '');
+                                const sliced = preview_text.slice(0, 15) + '...';
+                                sub_item.textContent = sliced; 
+                                
+                                sub_item.style.cursor = "pointer";
+                                sub_item.style.color = 'black';
+                                sub_item.title = "Open Note";
+                                sub_item.style.fontSize = "16px";
+                                recent_list.appendChild(sub_item);
+                            }
+                        });                     
+                    }                   
+                }    
+                const main_list= document.getElementById('key_list');
+                main_list.replaceWith(recent_list);     
+                const sub_list = document.getElementById('subkeys');
+                sub_list.style.visibility = 'hidden';
+                document.getElementById('back_btn').style.visibility = 'visible';
+        });
+
+        recent_list.addEventListener('click', function(event) {
+            if(event.target.tagName === 'LI') {
+                var click_element = event.target;
+                var click_element_id = click_element.id;
+                
+
+                    const ele_id = click_element_id.toString();
+                    var exists = '';
+
+                    //A function which adds essential instructions to the url of notes page.
+                    function openNotesPage() {
+                        const pageURL = chrome.runtime.getURL('notes.html');
+                        window.open(pageURL + '?note=' + ele_id + '&exists=' + exists, '_blank');
+                    }
+                    chrome.storage.local.get(ele_id, function(data) { 
+                        const id_value = data[ele_id];
+                        if(id_value){
+                                exists = 'true';
+                                openNotesPage();
+                                console.log("Previous saved data exists for this marker.");
+                        }else{
+                                exists = 'false';
+                                openNotesPage();
+                                console.log("No Previous Data Exists for this marker");
+                        }
+                    });  
+            }
+        })
+
+    })
+
+    document.getElementById('back_btn').addEventListener('click', function() {
+        document.getElementById('back_btn').style.visibility = 'hidden';
+        location.reload();
+    })
+
+
+
+
     //Current URL Notes Viewer
     const params = new URLSearchParams(window.location.search);
     const note_url = params.get('url');

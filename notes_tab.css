@@ -23,16 +23,19 @@
   text-decoration: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  transition: 0.2s;
   /* transition: 1s; */
 }
 
 .button_2:hover {
+  transition: 0.2s;
   background-color: rgb(253, 248, 255);
   /* transition: 1s; */
   transform: translateY(-2px);
 }
 
 .button_2:active {
+  transition: 0.2s;
   background-color: rgb(204, 255, 217);
   transform: translateY(2px);
 }
@@ -61,7 +64,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 5rem;
+    margin-top: 3rem;
     gap: 1rem;
 }
 
@@ -118,8 +121,8 @@
 }
 
 .editor-container {
-    width: 97%;
-    margin: 2px auto;
+    width: 99%;
+    margin: 1px auto;
 }
 
 .ck-editor__editable[role="textbox"] {

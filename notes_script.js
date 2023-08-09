@@ -1,7 +1,5 @@
 // Notes
 
-
-
 CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
     // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
     
@@ -160,11 +158,11 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
     editor = newEditor;
 });
 
-
 //getting id from the url
 const params = new URLSearchParams(window.location.search);
 const note_id = params.get('note');
 const exists = params.get('exists');
+
 
 //Adding and fetching data from chrome storage:
 document.getElementById("save_btn").addEventListener('click', () => {
@@ -175,7 +173,31 @@ document.getElementById("save_btn").addEventListener('click', () => {
     const timestamp = new Date().getTime();
     editorData.timestamp = timestamp;
     chrome.storage.local.set({ [note_id]: editorData});
+
+    //Adding note to recently saved notes section:
+    const storing_key = 'readerai_recent_notes';
+    chrome.storage.local.get(storing_key, function(data) {
+        const existing_marks = data[storing_key] || [];
+    
+        // Add the new value at the beginning
+        existing_marks.unshift(note_id);
+    
+        // Keep only the first 5 elements
+        if (existing_marks.length > 5) {
+            existing_marks.pop(); // Remove the last element
+        }
+    
+        const markers = { 
+            [storing_key]: existing_marks 
+        };
+    
+        chrome.storage.local.set(markers, function() {
+            // console.log("Values appended to recent notes", markers);
+        });
+    });
 });
+
+
 
 const notes_title = document.getElementById('readerai_notes');
     notes_title.addEventListener('click', function() {

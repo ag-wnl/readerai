@@ -162,13 +162,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //to toggle theme (dark/light) of the webpage
     document.getElementById("dark_mode_toggle").addEventListener("click", function(){
-        isToggled = !isToggled;
-        if(isToggled){
-            chrome.runtime.sendMessage({action : 'dark-mode'});
-        }
-        else{
-            chrome.runtime.sendMessage({action : 'dark-mode-undo'});
-        }
+        const key_val = 'toggle';
+        console.log('yyyyy');
+        chrome.storage.local.get(key_val, function(data) {
+            if(!data[key_val]) {
+                console.log('yyyyy');
+                chrome.storage.local.set({ [key_val] : 1});
+                chrome.runtime.sendMessage({action : 'dark-mode'});
+            }else if(data[key_val] === 1) {
+                console.log('yyyyy');
+                chrome.runtime.sendMessage({action : 'dark-mode-undo'});
+                chrome.storage.local.set({ [key_val] : 0})
+            }else if(data[key_val] === 0) {
+                console.log('yyyyy');
+                chrome.storage.local.set({ [key_val] : 1});
+                chrome.runtime.sendMessage({action : 'dark-mode'});
+            }
+        });
     })
 
     const notes_page_btn = document.getElementById('notes_button');
